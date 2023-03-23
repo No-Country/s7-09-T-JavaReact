@@ -30,7 +30,7 @@
 # Guia de experiencias
 
 
-## Enlace en aplicación
+## Enlace a la aplicación
 
 - 
 
