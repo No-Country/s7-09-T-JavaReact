@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tripMate</groupId>
-	<artifactId>noCountry</artifactId>
+	<artifactId>demo</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>backend</name>
+	<name>tripMate</name>
 	<description>project for no-country</description>
 	<properties>
 		<java.version>17</java.version>
