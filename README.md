@@ -10,6 +10,7 @@
 
 // Integrantes del equipo de back-end
   Gabriel Mayantz Remes,
+  Analia Casali
   
 
 // Integrantes del equipo de diseño UI/UX
