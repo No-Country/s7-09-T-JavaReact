@@ -1,11 +1,9 @@
+import AppRouter from './routes/AppRouter';
 
-const App = () => {
-
+function App() {
   return (
-    <div className="App">
-      <h1 className='font-bold text-2xl text-center text-red-400'>TRIPMATE</h1>
-    </div>
-  )
+    <AppRouter/>
+  );
 }
 
-export default App
+export default App;
