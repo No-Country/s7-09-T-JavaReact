@@ -3,18 +3,14 @@ package com.tripMate.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
-@Table(name = "categories")
+@Table(name = "tags")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Category {
-
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,9 +22,6 @@ public class Category {
     @Column(name = "icon", length = 350)
     private String icon;
 
-    @OneToMany()
-    @JoinColumn(name = "category_id")
-    private Set<Tag> tags = new HashSet<>();
 
 
 }
