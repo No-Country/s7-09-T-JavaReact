@@ -1,5 +1,6 @@
 package com.tripMate.demo.service;
 
+import com.tripMate.demo.dto.CityDTO;
 import com.tripMate.demo.entity.City;
 import org.springframework.http.ResponseEntity;
 

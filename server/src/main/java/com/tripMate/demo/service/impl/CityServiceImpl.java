@@ -19,17 +19,18 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private Mapper mapper;
 
-    public ResponseEntity<?> getCity(Long id) {
+    public ResponseEntity<CityDTO> getCity(Long id) {
         City city = cityRepository.findById(id).orElseThrow();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper.getMapper().map(city, CityDTO.class));
     }
 
 
     @Override
-    public ResponseEntity<?> getAllCities() {
+    public ResponseEntity<List<CityDTO>> getAllCities() {
         List<City> cities = cityRepository.findAll();
         List<CityDTO> citiesDTO = cities.stream().map(city -> mapper.getMapper().map(city, CityDTO.class)).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(citiesDTO);
+
     }
 
     @Override
