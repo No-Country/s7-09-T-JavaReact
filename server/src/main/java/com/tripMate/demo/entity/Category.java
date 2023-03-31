@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "CATEGORIES")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,17 +17,17 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "ID")
     private int id;
 
-    @Column(name = "title", length = 350)
+    @Column(name = "TITLE", length = 350)
     private String title;
 
-    @Column(name = "icon", length = 350)
+    @Column(name = "ICON", length = 350)
     private String icon;
 
     @OneToMany()
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "CATEGORY_ID")
     private Set<Tag> tags = new HashSet<>();
 
 

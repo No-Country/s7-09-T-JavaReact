@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "tags")
+@Table(name = "TAGS")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,13 +13,13 @@ import lombok.*;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "ID")
     private int id;
 
-    @Column(name = "title", length = 350)
+    @Column(name = "TITLE", length = 350)
     private String title;
 
-    @Column(name = "icon", length = 350)
+    @Column(name = "ICON", length = 350)
     private String icon;
 
 
