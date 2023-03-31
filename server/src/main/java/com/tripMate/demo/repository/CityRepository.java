@@ -9,10 +9,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CityRepository extends JpaRepository<City, Long> {
+public interface CityRepository extends JpaRepository<City, Integer > {
 
-    @Query(value = "SELECT * FROM cities  WHERE city LIKE %:search% OR  province LIKE %:search% OR  country LIKE %:search%   ", nativeQuery = true)
-    List<City> findAllByCityOrProvinceOrCountryContaining(@Param("search") String text);
+/*
+    @Query(value = "SELECT * FROM cities  WHERE cities.city LIKE :search OR  cities.province LIKE :search OR  cities.country LIKE :search", nativeQuery = true)
+    List<City> findAllByCityOrProvinceOrCountryContaining(@Param("search") String search);
 
+    List<City> findByCityContaining(String city);
+*/
 }
 
