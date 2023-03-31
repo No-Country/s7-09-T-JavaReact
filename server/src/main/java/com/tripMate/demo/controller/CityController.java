@@ -1,7 +1,6 @@
 package com.tripMate.demo.controller;
 
 import com.tripMate.demo.dto.CityDTO;
-import com.tripMate.demo.entity.City;
 import com.tripMate.demo.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/cities")
@@ -42,33 +40,33 @@ public class CityController {
         }
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<City>> getCityByName(@RequestParam String q) {
-       ResponseEntity<List<City>> response = (ResponseEntity<List<City>>) cityService.getCityBySearch(q);
-       //return new ResponseEntity<>(response.getBody(), response.getStatusCode());
-        if (response.getBody() != null) {
-            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping
-    public ResponseEntity<City> postCity(@RequestBody City city) {
-        ResponseEntity<?> response = cityService.postCity(city);
-        return new ResponseEntity<>(response.getStatusCode());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCityById(@PathVariable Long id) {
-        ResponseEntity<?> response = cityService.deleteCity(id);
-        return new ResponseEntity<>(response.getBody().toString(), response.getStatusCode());
-    }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<City> updateCity(@PathVariable Long id, @RequestBody City city) {
-        ResponseEntity<?> response = cityService.patchCity(id, city);
-        return new ResponseEntity<>(response.getStatusCode());
-    }
+//    @GetMapping("/search")
+//    public ResponseEntity<List<City>> getCityByName(@RequestParam String q) {
+//       ResponseEntity<List<City>> response = (ResponseEntity<List<City>>) cityService.getCityBySearch(q);
+//       //return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+//        if (response.getBody() != null) {
+//            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+//
+//    @PostMapping
+//    public ResponseEntity<City> postCity(@RequestBody City city) {
+//        ResponseEntity<?> response = cityService.postCity(city);
+//        return new ResponseEntity<>(response.getStatusCode());
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> deleteCityById(@PathVariable Long id) {
+//        ResponseEntity<?> response = cityService.deleteCity(id);
+//        return new ResponseEntity<>(response.getBody().toString(), response.getStatusCode());
+//    }
+//
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<City> updateCity(@PathVariable Long id, @RequestBody City city) {
+//        ResponseEntity<?> response = cityService.patchCity(id, city);
+//        return new ResponseEntity<>(response.getStatusCode());
+//    }
 
 }
