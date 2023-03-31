@@ -21,8 +21,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-12 w-full">
-      <img className="w-[18.5rem]" src={logo} alt="tripmate" />
+    <div className="flex flex-col items-center w-full">
+      <img className="w-[18.5rem] my-12" src={logo} alt="tripmate" />
       <form action="" className="flex flex-col p-4 w-full">
         <p className="font-bold">Iniciar sesión</p>
         <label htmlFor="email" className="mt-4 font-semibold">
