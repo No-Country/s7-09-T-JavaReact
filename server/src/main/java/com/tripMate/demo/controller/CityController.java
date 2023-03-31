@@ -1,6 +1,7 @@
 package com.tripMate.demo.controller;
 
 import com.tripMate.demo.dto.CityDTO;
+import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,23 +22,17 @@ public class CityController {
        // ResponseEntity<List<CityDTO>> response = (ResponseEntity<List<CityDTO>>) cityService.getAllCities();
         //return new ResponseEntity<>(response.getBody(), response.getStatusCode());
         try {
-            ResponseEntity<List<CityDTO>> response = (ResponseEntity<List<CityDTO>>) cityService.getAllCities();
-            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+            List<CityDTO> response = cityService.getAll();
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CityDTO> getCityById(@PathVariable Long id) {
-       // ResponseEntity<CityDTO> response = (ResponseEntity<CityDTO>) cityService.getCity(id);
-        //return new ResponseEntity<>(response.getBody(), response.getStatusCode()) ;
-        ResponseEntity<CityDTO> response = (ResponseEntity<CityDTO>) cityService.getCity(id);
-        if (response.getBody() != null) {
-            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<CityDTO> getCityById(@PathVariable int id) throws ResourceNotFoundException {
+        CityDTO response = cityService.getById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 //    @GetMapping("/search")
