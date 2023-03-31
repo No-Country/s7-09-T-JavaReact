@@ -19,7 +19,7 @@ public class SpringDocConfig {
     public GroupedOpenApi httpApi() {
         return GroupedOpenApi.builder()
                 .group("http")
-                .pathsToMatch("/category/**")
+                .pathsToMatch("/api/**")
                 .build();
     }
 }
