@@ -1,20 +1,25 @@
 package com.tripMate.demo.service;
 
+import com.tripMate.demo.dto.CityDTO;
+import com.tripMate.demo.entity.City;
+import com.tripMate.demo.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface CityService {
 
-    ResponseEntity<?> getAllCities();
+    List<CityDTO> getAll();
+    CityDTO getById(int id) throws ResourceNotFoundException;
 
-    ResponseEntity<?> getCity(Long id);
+
+/*    ResponseEntity<?> postCity(City city);
+
+    ResponseEntity<?> patchCity(int id, City city);
+
+    ResponseEntity<?> deleteCity(int id);
 
 
-//    ResponseEntity<?> postCity(City city);
-//
-//    ResponseEntity<?> patchCity(Long id, City city);
-//
-//    ResponseEntity<?> deleteCity(Long id);
-//
-//
-//    ResponseEntity<?> getCityBySearch(String search);
-}
+    ResponseEntity<?> getCityBySearch(String search);
+    ResponseEntity<?> findByCityContaining(String city);
+*/}
