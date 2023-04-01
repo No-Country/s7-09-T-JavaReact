@@ -2,7 +2,8 @@ export const PublicRoutes = {
     HOME: '',
     LOGIN: 'login',
     REGISTER: 'register',
-    EXPERIENCE: 'experience',
+    EXPERIENCES: 'experiences',
+    EXPERIENCE_DETAIL: 'experience/:id',
     CONTACT: 'contact',
     ABOUT: 'about',
 }
