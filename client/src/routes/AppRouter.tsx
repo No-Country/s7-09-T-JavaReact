@@ -10,7 +10,6 @@ const Profile = lazy(() => import("../pages/Profile/Profile"));
 const ExperienceDetail = lazy(() => import("../pages/ExperienceDetail/ExperienceDetail"));
 const Register = lazy(() => import("../pages/Register/Register"));
 const Login = lazy(() => import("../pages/Login/Login"));
-const Reviews = lazy(() => import("../pages/Reviews/Reviews"));
 const NotFound = lazy(() => import("../components/NotFound/NotFound"));
 
 const AppRouter = () => {
@@ -32,14 +31,6 @@ const AppRouter = () => {
             element={
               <RequireAuth>
                 <Profile />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path={PrivateRoutes.REVIEWS}
-            element={
-              <RequireAuth>
-                <Reviews />
               </RequireAuth>
             }
           />
