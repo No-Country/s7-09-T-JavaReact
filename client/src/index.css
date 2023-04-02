@@ -10,3 +10,8 @@
 body {
   font-family: "Ubuntu";
 }
+
+.bulletActive {
+  background-color: white;
+  width: 15px;
+}
