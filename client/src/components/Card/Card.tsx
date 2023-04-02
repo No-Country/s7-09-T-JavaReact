@@ -1,4 +1,4 @@
-import { ScoreStar } from "../ScoreStar/ScoreStar";
+import ScoreStar from "../ScoreStar/ScoreStar";
 import { useRef } from "react";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";

@@ -6,9 +6,9 @@ interface Iprops {
   type: "simple" | "complete";
 }
 
-export const ScoreStar: FC<Iprops> = ({ scoreStar, type }) => {
+const ScoreStar: FC<Iprops> = ({ scoreStar, type }) => {
   return (
-    <div className="flex font-medium text-lg text-[#FF5C00] items-center">
+    <div className="flex font-bold text-lg text-[#FF5C00] items-center">
       <div>
         {type === "complete" &&
           [...new Array(5)].map((score, index) => {
@@ -17,20 +17,24 @@ export const ScoreStar: FC<Iprops> = ({ scoreStar, type }) => {
                 key={`start-${index}`}
                 className="star__icon"
                 color="#FF5C00"
+                size={20}
               />
             ) : (
               <AiOutlineStar
                 key={`start-${index}`}
                 className="star__icon"
                 color="#FF5C00"
+                size={20}
               />
             );
           })}
       </div>
-      <p className="flex">{scoreStar}</p>
+      <p className="flex">{scoreStar.toFixed(1)}</p>
       {type === "simple" && (
-        <AiFillStar className="star__icon" color="#FF5C00" />
+        <AiFillStar className="star__icon" color="#FF5C00" size={20} />
       )}
     </div>
   );
 };
+
+export default ScoreStar;
