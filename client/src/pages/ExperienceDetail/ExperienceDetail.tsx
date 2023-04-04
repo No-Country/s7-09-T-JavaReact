@@ -3,6 +3,7 @@ import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
 import ScoreStar from "../../components/ScoreStar/ScoreStar";
 import Avatar from "../../components/Avatar/Avatar";
+import Reviews from "../../components/Reviews/Reviews";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -100,21 +101,8 @@ const ExperienceDetail = () => {
         <div className="flex w-full items-center my-4">
           <div className="flex h-0.5 w-full bg-gray-300"></div>
         </div>
+        <Reviews />
       </div>
-      <div className="flex justify-center font-bold">Componente Review</div>
-      {/* <div>
-        <h1>Geolocation Component</h1>
-        {error ? (
-          <p>{error}</p>
-        ) : position ? (
-          <>
-            <p>Latitude: {position.coords.latitude}</p>
-            <p>Longitude: {position.coords.longitude}</p>
-          </>
-        ) : (
-          <p>Loading position...</p>
-        )}
-      </div> */}
     </div>
   );
 };

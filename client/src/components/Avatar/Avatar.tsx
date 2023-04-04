@@ -2,12 +2,13 @@ import { FaUserCircle } from "react-icons/fa";
 
 interface Iprops {
   image_url: string | null;
-  size: "xs" | "md" | "xl";
+  size: "xs" | "sm"| "md" | "xl";
 }
 
 const Avatar = ({ image_url, size }: Iprops) => {
   const sizes = {
     xs: "40px",
+    sm: "48px",
     md: "60px",
     xl: "100px",
   };
