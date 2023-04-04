@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { PrivateRoutes, PublicRoutes } from "../models/routes";
 import Home from "../pages/Home/Home";
 import { RequireAuth } from "./RequireAuth";
+import Navbar from "../components/Navbar/Navbar";
 
 const About = lazy(() => import("../pages/About/About"));
 const Contact = lazy(() => import("../pages/Contact/Contact"));
@@ -17,6 +18,7 @@ const AppRouter = () => {
   return (
     <Suspense fallback={"loading"}>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path={PublicRoutes.HOME} element={<Home />} />
           <Route
