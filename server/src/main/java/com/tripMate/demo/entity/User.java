@@ -2,6 +2,7 @@ package com.tripMate.demo.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tripMate.demo.util.RoleEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -36,8 +37,14 @@ public class User {
     @NotEmpty
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private RoleEnum role;
+
+    /*
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     @JsonProperty(access =  JsonProperty.Access.WRITE_ONLY)
-    private Role role;
+    private Role role;*/
 }

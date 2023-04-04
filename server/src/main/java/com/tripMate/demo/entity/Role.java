@@ -1,7 +1,6 @@
 package com.tripMate.demo.entity;
 
-import com.tripMate.demo.entity.User;
-import com.tripMate.demo.utils.RoleEnum;
+import com.tripMate.demo.util.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,12 +10,14 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "ROLES")
-@Builder
+//@Entity(name = "ROLES")
+/*@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Getter*/
 public class Role {
+
+    /*
 
     @Id
     @Column(name="ID")
@@ -25,7 +26,7 @@ public class Role {
     @Column(name="NAME")
     private RoleEnum role;
 
-
+    /*
     @OneToMany(mappedBy = "role")
-    private Set<User> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();*/
 }
