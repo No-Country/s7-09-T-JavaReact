@@ -9,6 +9,7 @@ import education from "../../assets/icons/education.svg";
 import family from "../../assets/icons/family.svg";
 import food from "../../assets/icons/food.svg";
 import tourism from "../../assets/icons/tourism.svg";
+import { Link } from "react-router-dom";
 
 const categories = [
   {
@@ -59,15 +60,25 @@ const Home = () => {
               Disfrutar de una Experiencia ahora está a tu alcance
             </h2>
             <form className="w-full">
-                <div className="relative">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-1 hover:cursor-pointer">
-                    <i className="h-full flex items-center justify-center px-1 hover:cursor-pointer">
-                      <RiMapPin2Line className="text-[#FF5C00] text-2xl" />
-                    </i>
-                    </div>
-                    <input type="search" id="default-search" className="block w-full p-2 pl-9 text-sm text-gray-500 font placeholder:text-gray-500 placeholder:font-normal focus:outline-none border border-gray-300 rounded-lg bg-slate-100" placeholder="Buscar experiencias" />
-                    <button type="submit" className="absolute right-0 bottom-0 bg-[#FF5C00] hover:bg-[#FF5C00] focus:outline-none font-medium rounded-r-lg text-sm h-full px-2"><IoMdSearch className="text-2xl" /></button>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-1 hover:cursor-pointer">
+                  <i className="h-full flex items-center justify-center px-1 hover:cursor-pointer">
+                    <RiMapPin2Line className="text-[#FF5C00] text-2xl" />
+                  </i>
                 </div>
+                <input
+                  type="search"
+                  id="default-search"
+                  className="block w-full p-2 pl-9 text-sm text-gray-500 font placeholder:text-gray-500 placeholder:font-normal focus:outline-none border border-gray-300 rounded-lg bg-slate-100"
+                  placeholder="Buscar experiencias"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-0 bottom-0 bg-[#FF5C00] hover:bg-[#FF5C00] focus:outline-none font-medium rounded-r-lg text-sm h-full px-2"
+                >
+                  <IoMdSearch className="text-2xl" />
+                </button>
+              </div>
             </form>
           </div>
           <Slider />
@@ -86,7 +97,13 @@ const Home = () => {
               : null}
           </div>
           <div className="w-full flex flex-col md:flex-wrap md:flex-row gap-6 items-center justify-center lg:justify-evenly xl:justify-between">
-            {cards ? cards.map((card) => <Card key={card} />) : null}
+            {cards
+              ? cards.map((card) => (
+                  <Link key={card} to={`/experience/${card}`}>
+                    <Card />
+                  </Link>
+                ))
+              : null}
           </div>
         </div>
       </div>

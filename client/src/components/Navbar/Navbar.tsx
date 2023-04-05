@@ -82,12 +82,14 @@ const Navbar = () => {
           <div className="flex flex-col w-fit gap-3 items-stretch">
             <Link
               to={PublicRoutes.LOGIN}
+              onClick={CloseMenu}
               className="text-center py-2 rounded-lg bg-[#FF5C00] text-white font-bold text-base"
             >
               Login
             </Link>
             <Link
               to={PublicRoutes.REGISTER}
+              onClick={CloseMenu}
               className="text-center px-3 py-2 rounded-lg bg-white border border-[#FF5C00] text-[#FF5C00] font-bold text-base"
             >
               Registro
@@ -98,6 +100,7 @@ const Navbar = () => {
               className="font-normal text-sm py-2 px-3"
               key={link.title}
               to={link.path}
+              onClick={CloseMenu}
             >
               {link.title}
             </NavLink>

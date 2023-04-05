@@ -12,9 +12,11 @@ enum TypeEdit {
 }
 
 const Profile = () => {
-  const [location, setLocation] = useState("Bs.As., Argentina");
+  const [location, setLocation] = useState("Córdoba, Argentina");
   const [email, setEmail] = useState("darioelguero@gmail.com");
   const [password, setPassword] = useState("********");
+  const [profilePic, setProfilePic] = useState<File>({} as File);
+  const [image, setImage] = useState<string>("");
 
   const [edit, setEdit] = useState({
     location: false,
@@ -36,19 +38,39 @@ const Profile = () => {
     if (event.target.id === TypeEdit.password) setPassword(event.target.value);
   };
 
+  const uploadImage = () => {
+    if (profilePic?.name) {
+      const file = URL.createObjectURL(profilePic);
+      setImage(file);
+    }
+  };
+
   useEffect(() => {
     if (edit.location) inputLocation.current?.focus();
     if (edit.email) inputEmail.current?.focus();
     if (edit.password) inputPass.current?.focus();
   }, [edit]);
 
+  useEffect(() => {
+    uploadImage();
+  }, [profilePic]);
+
   return (
     <div className="flex flex-col w-full items-center">
       <div className="flex mt-12 relative">
-        <Avatar image_url={""} size="xl" />
-        <button className="flex justify-center items-center top-0 right-0 bg-white h-12 w-12 rounded-full absolute shadow-xl shadow-black cursor-pointer">
+        <Avatar image_url={image} size="xl" />
+        <label className="flex justify-center items-center top-0 right-0 bg-white h-12 w-12 rounded-full absolute shadow-xl shadow-black cursor-pointer">
           <AiOutlineCamera size={26} />
-        </button>
+          <input
+            className="hidden"
+            type="file"
+            name="profilePic"
+            id="file-profile"
+            onChange={(e) =>
+              setProfilePic(e.target.files ? e.target.files[0] : profilePic)
+            }
+          />
+        </label>
       </div>
       <div className="font-bold mt-5">Dario Elguero</div>
       <div className="w-full p-4">
