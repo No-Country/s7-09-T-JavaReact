@@ -8,7 +8,9 @@ import Navbar from "../components/Navbar/Navbar";
 const About = lazy(() => import("../pages/About/About"));
 const Contact = lazy(() => import("../pages/Contact/Contact"));
 const Profile = lazy(() => import("../pages/Profile/Profile"));
-const ExperienceDetail = lazy(() => import("../pages/ExperienceDetail/ExperienceDetail"));
+const ExperienceDetail = lazy(
+  () => import("../pages/ExperienceDetail/ExperienceDetail")
+);
 const Register = lazy(() => import("../pages/Register/Register"));
 const Login = lazy(() => import("../pages/Login/Login"));
 const NotFound = lazy(() => import("../components/NotFound/NotFound"));
@@ -31,9 +33,9 @@ const AppRouter = () => {
           <Route
             path={PrivateRoutes.PROFILE}
             element={
-              <RequireAuth>
-                <Profile />
-              </RequireAuth>
+              // <RequireAuth>
+              <Profile />
+              // </RequireAuth>
             }
           />
           <Route path="*" element={<NotFound />} />

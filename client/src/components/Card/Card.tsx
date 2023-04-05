@@ -12,12 +12,24 @@ const listImage = [
   "https://previews.123rf.com/images/bloodua/bloodua1701/bloodua170103247/72051455-jardines-y-fuentes-en-el-palacio-de-la-alhambra-en-granada-en-un-hermoso-d%C3%ADa-de-verano-espa%C3%B1a.jpg",
 ];
 
-const Card = () => {
+interface Iprops {
+  simple?: boolean;
+}
+
+const Card = ({ simple }: Iprops) => {
   const ref = useRef<SwiperRef>(null);
-  
+
   return (
-    <div className="w-[20.5rem] h-[26.4375rem] border-solid border bg-white rounded-xl shadow-xl">
-      <div className="w-[20.5rem] h-[17.625rem]">
+    <div
+      className={`${
+        simple ? "flex" : "w-[20.5rem] h-[26.4375rem]"
+      } border-solid border bg-white rounded-xl shadow-xl`}
+    >
+      <div
+        className={`${
+          simple ? "w-[8.375rem] h-[8.75rem]" : "w-[20.5rem] h-[17.625rem]"
+        }`}
+      >
         <Swiper
           ref={ref}
           cssMode={true}
@@ -37,9 +49,14 @@ const Card = () => {
           {listImage.length > 0 ? (
             listImage.map((image, index) => {
               return (
-                <SwiperSlide key={`prod-${index}`} className="h-[282px]">
+                <SwiperSlide
+                  key={`prod-${index}`}
+                  className={`${simple ? "h-[8.75rem]" : "h-[282px]"}`}
+                >
                   <img
-                    className="h-full rounded-t-xl"
+                    className={`${
+                      simple ? "rounded-l-xl" : "rounded-t-xl"
+                    } h-full`}
                     src={image}
                     alt={`experience-${index}`}
                   />
@@ -47,7 +64,7 @@ const Card = () => {
               );
             })
           ) : (
-            <SwiperSlide >
+            <SwiperSlide>
               <img
                 className="img__product"
                 src={
@@ -59,11 +76,13 @@ const Card = () => {
           )}
         </Swiper>
       </div>
-      <div className="flex flex-col gap-0.5 px-6 py-4">
+      <div
+        className={`${
+          simple ? "px-4 py-4" : "px-6 py-4"
+        } flex flex-col gap-0.5`}
+      >
         <div className=" flex gap-4 justify-start items-start">
-          <h2 className="font-medium text-lg leading-5">
-            Biaka Biodescanso, Cali, Colombia
-          </h2>
+          <h2 className="font-medium text-lg leading-5">Biaka Biodescanso</h2>
           <ScoreStar scoreStar={3} type="simple" />
         </div>
         <p className="text-[0.9375rem]">
