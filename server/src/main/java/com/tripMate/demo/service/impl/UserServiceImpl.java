@@ -28,6 +28,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     @Override
     public UserDTO createUser(UserCreateDTO userCreateDTO, String role) throws ResourceNotFoundException, ResourceAlreadyExistsException {
         if(userRepository.existsByEmail(userCreateDTO.getEmail())) {
@@ -36,9 +39,15 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toUser(userCreateDTO);
         user.setPassword(encoder.encode(user.getPassword()));
 
+        try {
+            user.setRole(RoleEnum.valueOf(role));
+        } catch (IllegalArgumentException e) {
+            throw new ResourceNotFoundException("Role not found");
+        }
+        User saved = userRepository.save(user);
 
+        return userMapper.toUserDTO(saved);
 
-        return null;
     }
 
     @Override
