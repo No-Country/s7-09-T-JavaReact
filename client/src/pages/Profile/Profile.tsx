@@ -27,7 +27,6 @@ const Profile = () => {
   const inputPass = useRef<HTMLInputElement>(null);
 
   const handleEditLocation = (type: TypeEdit) => {
-    console.log(type);
     setEdit({ ...edit, [type]: !edit[type] });
   };
 
