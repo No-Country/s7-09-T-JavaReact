@@ -13,13 +13,13 @@ public interface CityService {
     CityDTO getById(int id) throws ResourceNotFoundException;
 
 
-/*    ResponseEntity<?> postCity(City city);
+    CityDTO post(City city);
 
-    ResponseEntity<?> patchCity(int id, City city);
+    CityDTO patch(int id, City city) throws ResourceNotFoundException;
 
-    ResponseEntity<?> deleteCity(int id);
+    CityDTO delete(int id) throws ResourceNotFoundException;
 
 
-    ResponseEntity<?> getCityBySearch(String search);
-    ResponseEntity<?> findByCityContaining(String city);
-*/}
+    List<CityDTO> getBySearch(String search);
+    List<CityDTO> findByCityContaining(String city);
+}
