@@ -5,7 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookF } from 'react-icons/fa';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 
-const Login = () => {
+const ProviderForm = () => {
 	enum registerPass {
 		text = 'text',
 		password = 'password',
@@ -22,7 +22,7 @@ const Login = () => {
 	return (
 		<div className='flex flex-col items-center w-full'>
 			<form action='' className='flex flex-col p-4 w-full'>
-				<p className='font-bold mb-4'>Crea tu cuenta personal</p>
+				<p className='font-bold mb-4'>Crea tu cuenta Proveedor</p>
 				<div className='flex flex-1 gap-6 justify-center'>
 					<div>
 						<label htmlFor='name' className='mt-4 font-semibold'>
@@ -142,4 +142,4 @@ const Login = () => {
 		</div>
 	);
 };
-export default Login;
+export default ProviderForm;

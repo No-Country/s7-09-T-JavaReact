@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SelectAcountType from '../../components/SelectAcountType/SelectAcountType';
-import PersonalForm from '../../components/RegisterForm/Personal';
-import ProviderForm from '../../components/RegisterForm/Provider';
+import PersonalForm from '../../components/RegisterForm/PersonalForm';
+import ProviderForm from '../../components/RegisterForm/ProviderForm';
 import { AcountTypeEnum } from '../../models/AcountTypeEnum';
 
 const Register = () => {
@@ -13,7 +13,6 @@ const Register = () => {
 			{typeAcount === AcountTypeEnum.NULL && (
 				<SelectAcountType setType={setTypeAcount} />
 			)}
-			{/* still have to modify forms */}
 			{typeAcount === AcountTypeEnum.PERSONAL && <PersonalForm />}
 			{typeAcount === AcountTypeEnum.SUPPLIER && <ProviderForm />}
 			{typeAcount !== AcountTypeEnum.NULL && (
