@@ -2,7 +2,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 interface Iprops {
   image_url: string | null;
-  size: "xs" | "sm"| "md" | "xl";
+  size: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 const Avatar = ({ image_url, size }: Iprops) => {
@@ -10,7 +10,8 @@ const Avatar = ({ image_url, size }: Iprops) => {
     xs: "40px",
     sm: "48px",
     md: "60px",
-    xl: "100px",
+    lg: "100px",
+    xl: "161px",
   };
   return (
     <>
@@ -21,7 +22,7 @@ const Avatar = ({ image_url, size }: Iprops) => {
         {image_url ? (
           <img src={image_url} alt={"avatar-name"} />
         ) : (
-          <FaUserCircle size={size}/>
+          <FaUserCircle size={sizes[size]} />
         )}
       </div>
     </>

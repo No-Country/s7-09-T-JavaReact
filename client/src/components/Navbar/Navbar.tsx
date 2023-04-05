@@ -10,8 +10,6 @@ const Navbar = () => {
   const [onOpen, setOnOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  console.log(onOpen)
-
   const OpenMenu = () => {
     setOnOpen(true);
   };
@@ -31,7 +29,10 @@ const Navbar = () => {
 
   return (
     <div className="relative flex flex-grow justify-between p-3 bg-white drop-shadow-md z-50">
-      <nav id="navbar" className="hidden lg:flex flex-grow max-w-6xl mx-auto items-center justify-between">
+      <nav
+        id="navbar"
+        className="hidden lg:flex flex-grow max-w-6xl mx-auto items-center justify-between"
+      >
         <img className="w-28" src={TripmateLogo} alt="Tripmate" />
         <div className="flex gap-6 items-center">
           {links.map((link) => (
@@ -67,12 +68,17 @@ const Navbar = () => {
       <img className="w-28 lg:hidden" src={TripmateLogo} alt="Tripmate" />
       <div
         ref={ref}
-        className={`lg:hidden absolute top-0 ${onOpen ? "left-0" : "-left-96"} w-2/4 md:w-2/5 h-screen p-3 bg-white transition-all`}
+        className={`lg:hidden absolute top-0 ${
+          onOpen ? "left-0" : "-left-96"
+        } w-2/4 md:w-2/5 h-screen p-3 bg-white transition-all`}
       >
         <button onClick={CloseMenu} className="text-2xl text-[#FF5C00]">
           <IoCloseSharp />
         </button>
-        <nav id="navbar-mobile" className="h-full flex flex-col px-3 py-6 gap-3">
+        <nav
+          id="navbar-mobile"
+          className="h-full flex flex-col px-3 py-6 gap-3"
+        >
           <div className="flex flex-col w-fit gap-3 items-stretch">
             <Link
               to={PublicRoutes.LOGIN}
