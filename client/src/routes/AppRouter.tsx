@@ -4,6 +4,7 @@ import { PrivateRoutes, PublicRoutes } from "../models/routes";
 import Home from "../pages/Home/Home";
 import { RequireAuth } from "./RequireAuth";
 import Navbar from "../components/Navbar/Navbar";
+import Spinner from "../components/Spinner/Spinner";
 
 const About = lazy(() => import("../pages/About/About"));
 const Contact = lazy(() => import("../pages/Contact/Contact"));
@@ -15,7 +16,7 @@ const NotFound = lazy(() => import("../components/NotFound/NotFound"));
 
 const AppRouter = () => {
   return (
-    <Suspense fallback={"loading"}>
+    <Suspense fallback={<Spinner />}>
       <BrowserRouter>
         <Navbar />
         <Routes>
