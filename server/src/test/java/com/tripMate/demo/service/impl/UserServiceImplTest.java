@@ -34,7 +34,7 @@ class UserServiceImplTest {
     @MockBean
     private PasswordEncoder encoder;
 
-    private UserMapper userMapper = UserMapper.INSTANCE;
+    private final UserMapper userMapper = UserMapper.INSTANCE;
 
     @Autowired
     private UserService userService;
