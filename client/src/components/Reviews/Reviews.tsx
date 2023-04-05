@@ -92,7 +92,7 @@ const Reviews = () => {
       </div>
       {reviewList.map((review) => {
         return (
-          <div>
+          <div key={review.id}>
             <div className="flex w-full items-center my-4">
               <div className="flex h-0.5 w-full bg-gray-300"></div>
             </div>
