@@ -29,7 +29,12 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public UserDTO createUser(UserCreateDTO userCreateDTO, String role) {
+    public UserDTO createUser(UserCreateDTO userCreateDTO, String role) throws ResourceNotFoundException, ResourceAlreadyExistsException {
+        if(userRepository.existsByEmail(userCreateDTO.getEmail())) {
+            throw new ResourceAlreadyExistsException("Email already exists");
+        }
+        User user = userMapper.toUser(userCreateDTO);
+        user.setPassword(encoder.encode(user.getPassword()));
 
 
 
