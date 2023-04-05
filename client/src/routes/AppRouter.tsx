@@ -4,6 +4,7 @@ import { PrivateRoutes, PublicRoutes } from "../models/routes";
 import Home from "../pages/Home/Home";
 import { RequireAuth } from "./RequireAuth";
 import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
 
 const About = lazy(() => import("../pages/About/About"));
 const Contact = lazy(() => import("../pages/Contact/Contact"));
@@ -38,6 +39,7 @@ const AppRouter = () => {
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </Suspense>
   );
