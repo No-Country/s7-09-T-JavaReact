@@ -65,11 +65,14 @@ public class UserServiceImpl implements UserService {
         ));
     }
 
-        user.setName(userDTO.getName());
-        user.setLastname(userDTO.getLastname());
-        user.setEmail(userDTO.getEmail());
 
-        return userMapper.toUserDTO(userRepository.save(user));
+    @Override
+    public UserDTO updateUser(int id, UserCreateDTO userDTO) throws ResourceNotFoundException {
+        User inputUser = userMapper.toUser(userDTO);
+        User newUser = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Util.mergeObjects(inputUser, newUser);
+        return userMapper.toUserDTO(userRepository.save(newUser));
     }
 
     @Override
