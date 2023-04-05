@@ -3,17 +3,20 @@ package com.tripMate.demo.service.impl;
 import com.tripMate.demo.dto.UserCreateDTO;
 import com.tripMate.demo.dto.UserDTO;
 import com.tripMate.demo.entity.User;
+import com.tripMate.demo.exception.ResourceAlreadyExistsException;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.mapper.UserMapper;
 import com.tripMate.demo.repository.UserRepository;
 import com.tripMate.demo.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
+import com.tripMate.demo.util.RoleEnum;
+import com.tripMate.demo.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -40,11 +43,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.toUserDTO(user);
     }
 
-
     @Override
-    public UserDTO updateUser(int id, UserDTO userDTO) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+    public UserDTO getUserByEmail(String email) throws ResourceNotFoundException {
+        return userMapper.toUserDTO(
+                userRepository.findByEmail(email)
+                        .orElseThrow(() -> new ResourceNotFoundException("the user with email "+email+ " has not been found")
+        ));
+    }
 
         user.setName(userDTO.getName());
         user.setLastname(userDTO.getLastname());
