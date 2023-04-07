@@ -26,21 +26,25 @@ const About = () => {
 					relevantes en su área.
 				</p>
 				<div className='my-8 space-y-6'>
-					<img className='mx-auto' src={Geolocalizacion} />
+					<img
+						className='mx-auto'
+						alt='geolocalizacion'
+						src={Geolocalizacion}
+					/>
 					<p>
 						Encuentra rápidamente los mejores servicios y experiencias en tu
 						área y saca el máximo provecho.
 					</p>
 				</div>
 				<div className='my-8 space-y-6'>
-					<img className='mx-auto' src={Categorias} />
+					<img className='mx-auto' alt='categorias' src={Categorias} />
 					<p>
 						Selecciona entre las diferentes categorías para encontrar lo que más
 						se acomode a tus necesidades.
 					</p>
 				</div>
 				<div className='my-8 space-y-6'>
-					<img className='mx-auto' src={Valoraciones} />
+					<img className='mx-auto' alt='valoraciones' src={Valoraciones} />
 					<p>
 						Mira entre las diferentes valoraciones y reseñas de los usuarios
 						para encontrar la mejor experiencia.
