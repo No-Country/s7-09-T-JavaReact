@@ -54,7 +54,7 @@ const Home = () => {
   return (
     <div className="w-full flex flex-col justify-between pb-6">
       <div className="w-full max-w-6xl flex flex-col md:mx-auto gap-3">
-        <div className="w-full h-72 md:h-[600px] flex items-center justify-center text-3xl text-white font-bold relative">
+        <div className="w-full h-72 md:h-[25rem] flex items-center justify-center text-3xl text-white font-bold relative">
           <div className="w-full h-full flex flex-col gap-6 items-center lg:items-start justify-end  mb-24 absolute z-[3] px-3 md:px-6">
             <h2 className="text-center lg:w-3/5 lg:text-start font-bold text-2xl lg:text-5xl px-16 lg:p-0">
               Disfrutar de una Experiencia ahora está a tu alcance
