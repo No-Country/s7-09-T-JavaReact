@@ -1,5 +1,5 @@
 import Banner from '../../../public/images/AboutBanner.png';
-import Reseña from '../../../public/images/UserReseña.png';
+import Review from '../../../public/images/UserReview.png';
 import Geolocalizacion from '../../assets/icons/Geolocalizacion.svg';
 import Categorias from '../../assets/icons/Categorias.svg';
 import Valoraciones from '../../assets/icons/Valoraciones.svg';
@@ -43,7 +43,7 @@ const About = () => {
 					</p>
 				</div>
 				<div className='my-8 space-y-6'>
-					<img className='mx-auto' src={Reseña} />
+					<img className='mx-auto' src={Review} />
 					<p className='mx-auto text-center'>
 						“Me encanta, logré encontrar experiencias increíbles que estaban en
 						mi ciudad de las cuáles no sabía de su existencia.”
