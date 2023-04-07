@@ -55,11 +55,11 @@ const Home = () => {
     <div className="w-full flex flex-col justify-between pb-6">
       <div className="w-full max-w-6xl flex flex-col md:mx-auto gap-3">
         <div className="w-full h-72 md:h-[600px] flex items-center justify-center text-3xl text-white font-bold relative">
-          <div className="w-full h-full flex flex-col gap-6 items-center justify-end mb-24 absolute z-[3] px-3 md:px-6">
-            <h2 className="text-center font-bold text-2xl px-16">
+          <div className="w-full h-full flex flex-col gap-6 items-center lg:items-start justify-end  mb-24 absolute z-[3] px-3 md:px-6">
+            <h2 className="text-center lg:w-3/5 lg:text-start font-bold text-2xl lg:text-5xl px-16 lg:p-0">
               Disfrutar de una Experiencia ahora está a tu alcance
             </h2>
-            <form className="w-full">
+            <form className="w-full lg:w-2/5 self-start">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-1 hover:cursor-pointer">
                   <i className="h-full flex items-center justify-center px-1 hover:cursor-pointer">
@@ -84,7 +84,7 @@ const Home = () => {
           <Slider />
         </div>
         <div className="w-full flex flex-col gap-3 xl:px-0">
-          <div className="flex w-full gap-x-3 lg:gap-x-3 xl:gap-x-9 items-center md:mx-auto pl-6 md:px-3 xl:px-0 pb-3 overflow-x-scroll md:overflow-x-hidden font-medium">
+          <div className="flex w-full gap-x-3 lg:gap-x-6 items-center lg:justify-center md:mx-auto pl-6 md:px-3 xl:px-0 pb-3 overflow-x-scroll md:overflow-x-hidden font-medium">
             {categories
               ? categories.map((category) => (
                   <LinkCard
