@@ -26,7 +26,7 @@ export const contacts = [
     },
     {
       name: "Gerardo Vargas",
-      role: "Back-end",
+      role: "Diseño UX/UI",
       img: "",
     },
     {
@@ -36,7 +36,7 @@ export const contacts = [
     },
     {
       name: "Gabriel Mayantz",
-      role: "Diseño UX/UI",
+      role: "Back-end",
       img: "",
     },
     {
