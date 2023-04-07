@@ -8,7 +8,11 @@ const About = () => {
 	return (
 		<div>
 			<div id='Banner' className='relative max-w-2xl'>
-				<img src={Banner} className='w-full filter brightness-50 ' />
+				<img
+					src={Banner}
+					alt='About Banner'
+					className='w-full filter brightness-50 '
+				/>
 				<p className='absolute top-1/3 left-8 w-2/3 font-bold text-white text-3xl'>
 					No pierdas la oportunidad de disfrutar eso que te gusta.
 				</p>
@@ -43,7 +47,7 @@ const About = () => {
 					</p>
 				</div>
 				<div className='my-8 space-y-6'>
-					<img className='mx-auto' src={Review} />
+					<img className='mx-auto' alt='user review' src={Review} />
 					<p className='mx-auto text-center'>
 						“Me encanta, logré encontrar experiencias increíbles que estaban en
 						mi ciudad de las cuáles no sabía de su existencia.”
