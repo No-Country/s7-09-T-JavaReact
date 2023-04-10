@@ -8,7 +8,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 public class UserCreateDTO {
-
+// This is a DTO for the User entity creation
+// Contains only the fields needed for the creation of a new user
     private String name;
     private String lastname;
     private String email;
