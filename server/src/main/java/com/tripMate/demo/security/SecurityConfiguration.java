@@ -36,6 +36,25 @@ public class SecurityConfiguration {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
 
+    private static final String[] FREE_ENDPOINTS = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            //others
+            "/authenticate/**",
+            "/bienvenido.html","/authenticate", "/login.html", "/styles/**", "/assets/**", "/scripts/**", "/signup.html"
+
+    };
+
+
+
     @Autowired
     public SecurityConfiguration(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;
@@ -46,11 +65,17 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests( auth ->  {
             // endpoints without authentication
-            auth.requestMatchers(HttpMethod.GET, "/api/category/**").permitAll();
-            auth.requestMatchers(HttpMethod.GET, "/api/cities/**").permitAll();
-            auth.requestMatchers( "/api/user").permitAll();
-            auth.requestMatchers("/api/auth/**").permitAll();
+            auth.requestMatchers(FREE_ENDPOINTS).permitAll();
             auth.requestMatchers("/api/auth/test").permitAll();
+            auth.requestMatchers( "/api/users   ").permitAll();
+            auth.requestMatchers("/api/auth/**").permitAll();
+
+            auth.requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll();
+            auth.requestMatchers(HttpMethod.GET, "/api/cities/**").permitAll();
+            auth.requestMatchers(HttpMethod.GET, "/api/experiences/**").permitAll();
+            auth.requestMatchers(HttpMethod.GET, "/api/images/**").permitAll();
+
+
 
             // endpoints for authenticated users
 
@@ -61,6 +86,7 @@ public class SecurityConfiguration {
 
 
         http.csrf().disable();
+        http.cors().disable();
 
         http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
