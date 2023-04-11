@@ -2,7 +2,6 @@ package com.tripMate.demo.controller;
 
 import com.tripMate.demo.dto.UserCreateDTO;
 import com.tripMate.demo.dto.UserDTO;
-import com.tripMate.demo.entity.User;
 import com.tripMate.demo.exception.ResourceAlreadyExistsException;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.service.UserService;
@@ -14,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
