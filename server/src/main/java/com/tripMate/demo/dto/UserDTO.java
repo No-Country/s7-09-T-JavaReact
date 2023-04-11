@@ -1,6 +1,7 @@
 package com.tripMate.demo.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tripMate.demo.entity.Role;
 import com.tripMate.demo.util.RoleEnum;
 import lombok.*;
@@ -17,5 +18,8 @@ public class UserDTO {
     private String lastname;
     private String email;
     private RoleEnum role;
-    private String token;
+    @JsonProperty("access_token")
+    private String accessToken;
+    @JsonProperty("refresh_token")
+    private String refreshToken;
 }

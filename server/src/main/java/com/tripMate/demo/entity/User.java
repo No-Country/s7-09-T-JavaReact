@@ -1,11 +1,11 @@
 package com.tripMate.demo.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.tripMate.demo.util.RoleEnum;
+import com.tripMate.demo.util.Token;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,46 +15,48 @@ import java.util.Collection;
 import java.util.List;
 
 
-@Entity(name = "USERS")
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Entity
+@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "EMAIL")})
 public class User implements UserDetails {
 
     @Id
-    @Column(name="ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
-
     @Column(name="NAME", nullable = false, length = 350)
     private String name;
-
     @Column(name="LASTNAME", length = 350)
     private String lastname;
 
     @Column(name="EMAIL", nullable = false, length = 2048, unique = true)
-    @NotEmpty
-    @Email
     private String email;
 
     @Column(name="PASSWORD", nullable = false, length = 100)
-    @NotEmpty
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
     private RoleEnum role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(this.role.name()));
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return this.email;
+        return email;
     }
 
     @Override
@@ -76,11 +78,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    /*
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    @JsonProperty(access =  JsonProperty.Access.WRITE_ONLY)
-    private Role role;*/
 }

@@ -1,7 +1,7 @@
 package com.tripMate.demo.mapper;
 
 
-import com.tripMate.demo.dto.UserCreateDTO;
+import com.tripMate.demo.dto.RegisterRequest;
 import com.tripMate.demo.dto.UserDTO;
 import com.tripMate.demo.entity.User;
 import org.mapstruct.Mapper;
@@ -19,6 +19,6 @@ public interface UserMapper {
     List<UserDTO> toUsersDTO(List<User> users);
     List<User> toUsers(List<UserDTO> users);
 
-    UserCreateDTO toUserCreateDTO(User user);
-    User toUser(UserCreateDTO userDTO);
+    RegisterRequest  toUserCreateDTO(User user);
+    User toUser(RegisterRequest request);
 }

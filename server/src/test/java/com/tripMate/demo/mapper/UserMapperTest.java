@@ -1,6 +1,5 @@
 package com.tripMate.demo.mapper;
 
-import com.tripMate.demo.dto.UserCreateDTO;
 import com.tripMate.demo.dto.UserDTO;
 import com.tripMate.demo.entity.User;
 import com.tripMate.demo.util.RoleEnum;

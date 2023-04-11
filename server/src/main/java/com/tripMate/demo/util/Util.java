@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Util {
+
     public static String[] getNullPropertyNames(Object source) {
         final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = wrappedSource.getPropertyDescriptors();

@@ -1,6 +1,6 @@
 package com.tripMate.demo.service.impl;
 
-import com.tripMate.demo.dto.UserCreateDTO;
+import com.tripMate.demo.dto.RegisterRequest;
 import com.tripMate.demo.dto.UserDTO;
 import com.tripMate.demo.entity.User;
 import com.tripMate.demo.exception.ResourceAlreadyExistsException;
@@ -10,15 +10,13 @@ import com.tripMate.demo.repository.UserRepository;
 import com.tripMate.demo.service.UserService;
 import com.tripMate.demo.util.RoleEnum;
 import com.tripMate.demo.util.Util;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,11 +31,11 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder encoder;
 
     @Override
-    public UserDTO createUser(UserCreateDTO userCreateDTO, String role) throws ResourceNotFoundException, ResourceAlreadyExistsException {
-        if(userRepository.existsByEmail(userCreateDTO.getEmail())) {
+    public UserDTO createUser(RegisterRequest request, String role) throws ResourceNotFoundException, ResourceAlreadyExistsException {
+        if(userRepository.existsByEmail(request.getEmail())) {
             throw new ResourceAlreadyExistsException("Email already exists");
         }
-        User user = userMapper.toUser(userCreateDTO);
+        User user = userMapper.toUser(request);
         user.setPassword(encoder.encode(user.getPassword()));
 
         try {
@@ -66,10 +64,15 @@ public class UserServiceImpl implements UserService {
         ));
     }
 
+    @Override
+    public Boolean existUsername(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 
     @Override
-    public UserDTO updateUser(int id, UserCreateDTO userDTO) throws ResourceNotFoundException {
-        User inputUser = userMapper.toUser(userDTO);
+    public UserDTO updateUser(int id, RegisterRequest request) throws ResourceNotFoundException {
+        User inputUser = userMapper.toUser(request);
         User newUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         Util.mergeObjects(inputUser, newUser);
@@ -84,6 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
