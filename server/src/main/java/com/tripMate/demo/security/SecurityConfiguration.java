@@ -6,6 +6,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,6 +22,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -28,6 +32,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Configuration
@@ -67,7 +72,7 @@ public class SecurityConfiguration {
             // endpoints without authentication
             auth.requestMatchers(FREE_ENDPOINTS).permitAll();
             auth.requestMatchers("/api/auth/test").permitAll();
-            auth.requestMatchers( "/api/users   ").permitAll();
+            auth.requestMatchers( "/api/users").permitAll();
             auth.requestMatchers("/api/auth/**").permitAll();
 
             auth.requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll();
@@ -86,7 +91,6 @@ public class SecurityConfiguration {
 
 
         http.csrf().disable();
-        http.cors().disable();
 
         http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
@@ -136,5 +140,28 @@ public class SecurityConfiguration {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
+    }
+
+//    @Bean
+//    @Qualifier("corsConfiguration")
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
+            }
+        };
     }
 }
