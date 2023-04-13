@@ -13,7 +13,7 @@ public interface ExperienceRepository extends JpaRepository<Experience, Integer 
 
 
 //    @Query(value = "SELECT * FROM experience  WHERE experiences.title LIKE :search", nativeQuery = true)
-    List<Experience> findByCity(@Param("search") String search);
+  //  List<Experience> findByCity(@Param("search") String search);
     List<Experience> findByCategory_id(int id);
     List<Experience> findByCity_id(int id);
 

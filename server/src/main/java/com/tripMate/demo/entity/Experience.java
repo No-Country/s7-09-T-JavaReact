@@ -37,11 +37,12 @@ public class Experience {
     private String description;
 
 
-/*    @OneToMany()
-    @JoinColumn(name = "REVIEW_ID")
+/*    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EXPERIENCE_ID")
     private Set<Review> reviews = new HashSet<>();
 */
-    @OneToMany()
+
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "EXPERIENCE_ID")
     private Set<Image> images = new HashSet<>();
 
@@ -49,19 +50,17 @@ public class Experience {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     @NonNull
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CITY_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnore
     @NonNull
     private City city;
 
 /*
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CONTACT_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
