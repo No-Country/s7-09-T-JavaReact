@@ -1,5 +1,6 @@
 package com.tripMate.demo.mapper;
 
+import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
 import com.tripMate.demo.entity.Review;
 import org.mapstruct.Mapper;
@@ -15,5 +16,6 @@ public interface ReviewMapper {
     Review  toReview (ReviewDTO dto);
     List<ReviewDTO> toListDto(List<Review> reviews);
     List<ReviewDTO> toListReviews(List<ReviewDTO> reviews);
+
 
 }
