@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { PublicRoutes } from "../models/routes";
 import { postRequest } from "../services/httpRequest";
 import { Success, Error } from "../utils/notification";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../app/state/authSlice";
+import { setLocalStorage } from "../utils/LocalStorageFunctions";
 
 const createUser = (user: {}) => postRequest(user, "/api/users");
-const login = (user: {}) => postRequest(user, "/api/auth/login");
+const loginUser = (user: {}) => postRequest(user, "/api/auth/login");
 
 export const useCreateUser = () => {
   const navigate = useNavigate();
@@ -22,12 +25,26 @@ export const useCreateUser = () => {
   });
 };
 
-export const useLogin = (
-  onSuccess: (data: {}) => void,
-  onError: (error: {}) => void
-) => {
-  return useMutation(["login"], login, {
-    onSuccess,
-    onError,
+export const useLogin = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  return useMutation(loginUser, {
+    onSuccess: (auth) => {
+      const authInStorage = { token: auth.jwt, user: auth.user };
+      setLocalStorage("auth", authInStorage);
+
+      dispatch(setLogin(authInStorage));
+
+      Success(
+        `¡Hola ${auth.user.name}!`,
+        "¡Qué bueno tenerte de nuevo en Tripmate!"
+      );
+
+      navigate(`/${PublicRoutes.HOME}`, { replace: true });
+    },
+    onError: () => {
+      Error("Error al iniciar sesión");
+    },
   });
 };

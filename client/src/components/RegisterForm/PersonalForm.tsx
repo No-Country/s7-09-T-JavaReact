@@ -193,7 +193,7 @@ const PersonalForm = () => {
       </div>
       <div className="max-md:hidden border w-[25.5rem] mt-10 rounded-r-lg shadow-lg mb-10 shadow-dark-500">
         <img
-          src="../../../public/images/register_image.avif"
+          src="./images/register_image.avif"
           alt="register_image"
           className="object-fill h-full"
         />
