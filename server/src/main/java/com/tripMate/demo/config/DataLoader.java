@@ -1,11 +1,15 @@
 package com.tripMate.demo.config;
 
+import com.tripMate.demo.dto.UserCreateDTO;
 import com.tripMate.demo.entity.Category;
 import com.tripMate.demo.entity.City;
 import com.tripMate.demo.entity.Tag;
+import com.tripMate.demo.exception.ResourceAlreadyExistsException;
+import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.repository.CategoryRepository;
 import com.tripMate.demo.repository.CityRepository;
 import com.tripMate.demo.repository.TagRepository;
+import com.tripMate.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -18,14 +22,16 @@ import java.util.Set;
 public class DataLoader implements ApplicationRunner {
     private final CategoryRepository categoryRepository;
     private final TagRepository tagRepository;
+    private final UserService userService;
     private final CityRepository cityRepository;
     @Value("${dataloader:false}")
     private boolean isDataAutoLoaded;
 
     @Autowired
-    public DataLoader(CategoryRepository categoryRepository, TagRepository tagRepository, CityRepository cityRepository) {
+    public DataLoader(CategoryRepository categoryRepository, TagRepository tagRepository, UserService userService, CityRepository cityRepository) {
         this.categoryRepository = categoryRepository;
         this.tagRepository = tagRepository;
+        this.userService = userService;
         this.cityRepository = cityRepository;
     }
 
@@ -34,7 +40,31 @@ public class DataLoader implements ApplicationRunner {
         if (isDataAutoLoaded) {
             categoryLoading();
             cityLoading();
+            userLoading();
         }
+    }
+
+    private void userLoading() throws ResourceNotFoundException {
+        UserCreateDTO user1 = UserCreateDTO.builder()
+                .email("user@user.com")
+                .name("Jorge")
+                .lastname("User")
+                .password("12345")
+                .build();
+        UserCreateDTO user2 = UserCreateDTO.builder()
+                .email("admin@admin.com")
+                .name("Jorge")
+                .lastname("Admin")
+                .password("12345")
+                .build();
+
+        try {
+            userService.createUser(user1, "USER");
+            userService.createUser(user2, "ADMIN");
+        } catch (ResourceAlreadyExistsException e) {
+            System.out.println("User already exists");
+        }
+
     }
 
     private void categoryLoading() {
