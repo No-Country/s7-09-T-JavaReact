@@ -1,4 +1,4 @@
-package com.tripMate.demo;
+package com.tripMate.demo.mapper;
 
 import com.tripMate.demo.dto.CityDTO;
 import com.tripMate.demo.entity.City;
@@ -17,6 +17,7 @@ class CityMapperTest {
         //given
         City city = City.builder().id(1).city("Rosario").province("Santa Fe").country("Argentina").build();
         //when
+
         CityDTO cityDTO = mapper.toCityDTO(city);
 
         //then
