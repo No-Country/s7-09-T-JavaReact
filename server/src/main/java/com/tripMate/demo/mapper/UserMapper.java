@@ -1,6 +1,7 @@
 package com.tripMate.demo.mapper;
 
 
+import com.tripMate.demo.dto.Profile;
 import com.tripMate.demo.dto.UserCreateDTO;
 import com.tripMate.demo.dto.UserDTO;
 import com.tripMate.demo.entity.User;
@@ -21,4 +22,8 @@ public interface UserMapper {
 
     UserCreateDTO toUserCreateDTO(User user);
     User toUser(UserCreateDTO userDTO);
+    Profile toProfile(User user);
+    List<Profile> toProfiles(List<User> users);
+    User toUser(Profile profile);
+    List<User> profileToUsers(List<Profile> profiles);
 }
