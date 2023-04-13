@@ -1,3 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: 'Ubuntu';
+}
+
+.bulletActive {
+  background-color: white;
+  width: 15px;
+}
+
+#navbar a.active, #navbar-mobile a.active {
+  border-bottom: 3px #FF5C00 solid;
+  width: fit-content;
+}
