@@ -1,5 +1,7 @@
 package com.tripMate.demo.security;
 
+import com.tripMate.demo.exception.ResourceNotFoundException;
+import com.tripMate.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,25 +21,27 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins="**")
 public class AuthController {
     private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     private final JwtEncoder jwtEncoder;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, JwtEncoder jwtEncoder) {
+    public AuthController(AuthenticationManager authenticationManager, UserService userService, JwtEncoder jwtEncoder) {
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
         this.jwtEncoder = jwtEncoder;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationRespone> login(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) throws ResourceNotFoundException {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         String jwt = createToken(authentication);
-        return ResponseEntity.ok(new AuthenticationRespone(jwt));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, userService.getUserByEmail(request.getEmail())));
     }
 
     @GetMapping("/test")
     public String test() {
-    	return "test";
+        return "test";
     }
 
     private String createToken(Authentication authentication) {
