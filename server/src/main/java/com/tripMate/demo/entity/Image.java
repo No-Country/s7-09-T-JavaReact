@@ -31,6 +31,6 @@ public class Image {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "EXPERIENCE_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NonNull
+//    @NonNull
     private Experience experience;
 }
