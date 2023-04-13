@@ -6,7 +6,9 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -58,6 +60,9 @@ public class Experience {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @NonNull
     private City city;
+
+    @OneToMany(mappedBy = "experience")
+    private List<Review> reviews = new ArrayList<>();
 
 /*
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
