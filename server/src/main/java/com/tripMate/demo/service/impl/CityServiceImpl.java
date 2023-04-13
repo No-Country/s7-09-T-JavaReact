@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -25,75 +26,61 @@ public class CityServiceImpl implements CityService {
     public List<CityDTO> getAll() {
         return cityMapper.toCitiesDTO(cityRepository.findAll());
     }
+
     @Override
     public CityDTO getById(int id) throws ResourceNotFoundException {
-        City city =  cityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("City with id "+id+ " not found"));
+        City city = cityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("City with id " + id + " not found"));
         return cityMapper.toCityDTO(city);
     }
-/*
+
+
     @Override
-    public ResponseEntity<?> postCity(City city) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(cityRepository.save(city));
+    public CityDTO post(City city) {
+        City savedCity = cityRepository.save(city);
+        return cityMapper.toCityDTO(savedCity);
     }
 
-/*    @Override
-    public ResponseEntity<?> patchCity(int id, City city) {
-         City cityToUpdate = cityRepository.findById(id).orElseThrow(() -> new RuntimeException("City not found"));
-       cityToUpdate.setCity(city.getCity());
-        cityToUpdate.setProvince(city.getProvince());
-        cityToUpdate.setCountry(city.getCountry());
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(cityRepository.save(cityToUpdate));
-
+    @Override
+    public CityDTO patch(int id, City city) throws ResourceNotFoundException {
+        City existingCity = cityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("City with id " + id + " not found"));
+        if (city.getCity() != null) {
+            existingCity.setCity(city.getCity());
+        }
+        if (city.getProvince() != null) {
+            existingCity.setProvince(city.getProvince());
+        }
+        if (city.getCountry() != null) {
+            existingCity.setCountry(city.getCountry());
+        }
+        City updatedCity = cityRepository.save(existingCity);
+        return cityMapper.toCityDTO(updatedCity);
     }
-*/
-/*
-        @Override
-    public ResponseEntity<?> deleteCity(int id) {
-        City cityToDelete = cityRepository.findById(id).orElseThrow(() -> new RuntimeException("City not found"));
+
+    @Override
+    public CityDTO delete(int id) throws ResourceNotFoundException {
+        City cityToDelete = cityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("City with id " + id + " not found"));
         cityRepository.delete(cityToDelete);
-        return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body("City deleted");
-    }
-*/
-/*    @Override
-    public ResponseEntity<?> getCityBySearch(String search) {
-        List<City> cities = cityRepository.findAllByCityOrProvinceOrCountryContaining(search);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(cities);
+        return cityMapper.toCityDTO(cityToDelete);
     }
 
     @Override
-    public ResponseEntity<?> findByCityContaining(String city) {
+    public List<CityDTO> getBySearch(String search) {
+        List<City> cities = cityRepository.findAllByCityOrProvinceOrCountryContaining(search);
+        return cities.stream()
+                .map(city -> cityMapper.toCityDTO(city))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CityDTO> findByCityContaining(String city) {
         List<City> cities = cityRepository.findByCityContaining(city);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(cities);
+        return cities.stream()
+                .map(c -> cityMapper.toCityDTO(c))
+                .collect(Collectors.toList());
     }
 
-*/
+
 }
-
-/*
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> patchCity(@PathVariable Long id, @RequestBody City city) {
-        return cityService.patchCity(id, city);
-    }
-
-    @PostMapping("/")
-    public ResponseEntity<?> postCity(@RequestBody City city) {
-        return cityService.postCity(city);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCity(@PathVariable Long id) {
-        return cityService.deleteCity(id);
-    }
-
-    @GetMapping("/search{search}")
-    public ResponseEntity<?> getCityBySearch(@RequestParam String search) {
-        return cityService.getCityBySearch(search);
-    }
-    @GetMapping("/name{city}")
-    public ResponseEntity<?> getCityByCity(@PathVariable String city) {
-        return cityService.findByCityContaining(city);
-    }
-*/
