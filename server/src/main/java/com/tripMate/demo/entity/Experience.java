@@ -85,5 +85,7 @@ public class Experience {
     @Column(name = "LONGITUDE")
     private float longitude;
 
+    @Column(name = "PRICE")
+    private double price;
 
 }
