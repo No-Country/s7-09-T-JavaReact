@@ -26,6 +26,7 @@ public class ExperienceDTO {
     private String description;
     private Set<ImageDTO> images = new HashSet<>();
     private CategoryDTO category;
+    private ContactDTO contact;
     private CityDTO city;
     private String address;
     private float averageScore;

@@ -26,10 +26,13 @@ public class Experience {
 
     @Column(name = "TITLE", length = 350, nullable = false)
     @NonNull
-    private String title;
+    @Builder.Default
+    private String title="Default Title";
 
     @Column(name = "SUBTITLE", length = 350, nullable = false)
-    private String subtitle;
+    @NonNull
+    @Builder.Default
+    private String subtitle = "Default Subtitle";
 
 
     @Column(name = "DESCRIPTION", columnDefinition="TEXT", nullable = false)
@@ -37,36 +40,39 @@ public class Experience {
     private String description;
 
 
-/*    @OneToMany()
-    @JoinColumn(name = "REVIEW_ID")
+/*    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EXPERIENCE_ID")
     private Set<Review> reviews = new HashSet<>();
 */
-    @OneToMany()
+
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "EXPERIENCE_ID")
+    @Builder.Default
     private Set<Image> images = new HashSet<>();
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     @NonNull
-    private Category category;
+    @Builder.Default
+    private Category category=new Category();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CITY_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnore
     @NonNull
-    private City city;
+    @Builder.Default
+    private City city=new City();
 
-/*
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CONTACT_ID", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Contact contact;
-*/
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @NonNull
+    @Builder.Default
+    private Contact contact=new Contact();
+
 
     @Column(name = "ADDRESS", length = 350)
     private String address;

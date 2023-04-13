@@ -63,6 +63,9 @@ public class ExperienceServiceImpl implements ExperienceService {
         if(experience.getCategory() != null) {
             existingExperience.setCategory(experience.getCategory());
         }
+        if(experience.getContact() != null) {
+            existingExperience.setContact(experience.getContact());
+        }
         Experience updatedExperience = experienceRepository.save(existingExperience);
         return experienceMapper.toExperienceDTO(updatedExperience);
     }

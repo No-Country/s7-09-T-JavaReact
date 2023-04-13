@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {ImageMapper.class, CategoryMapper.class, CityMapper.class,TagMapper.class})
+@Mapper(componentModel = "spring", uses = {ImageMapper.class, CategoryMapper.class, CityMapper.class,TagMapper.class, ContactMapper.class})
 public interface ExperienceMapper {
     ExperienceMapper INSTANCE = Mappers.getMapper(ExperienceMapper.class);
     ExperienceDTO toExperienceDTO(Experience experience);
