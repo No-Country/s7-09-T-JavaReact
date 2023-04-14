@@ -27,7 +27,6 @@ public class Experience {
     private int id;
 
     @Column(name = "TITLE", length = 350, nullable = false)
-    @NonNull
     private String title;
 
     @Column(name = "SUBTITLE", length = 350, nullable = false)
@@ -52,13 +51,11 @@ public class Experience {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NonNull
     private Category category;
 
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CITY_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @NonNull
     private City city;
 
     @OneToMany(mappedBy = "experience")
