@@ -5,18 +5,15 @@ import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-const listImage = [
-  "https://www.clarin.com/img/2015/03/21/H1GaoLq6Xl_1256x620.jpg",
-  "https://www.veroniatours.com/imagenes/jardingeneralife.jpg",
-  "https://previews.123rf.com/images/bloodua/bloodua1701/bloodua170103247/72051455-jardines-y-fuentes-en-el-palacio-de-la-alhambra-en-granada-en-un-hermoso-d%C3%ADa-de-verano-espa%C3%B1a.jpg",
-];
+import { Experience } from "../../models/Experiences";
 
 interface Iprops {
   simple?: boolean;
 }
 
-const Card = ({ simple }: Iprops) => {
+type Props = Iprops & Experience;
+
+const Card = ({ simple, title, averageScore, description, images }: Props) => {
   const ref = useRef<SwiperRef>(null);
 
   return (
@@ -46,19 +43,19 @@ const Card = ({ simple }: Iprops) => {
             <div className="swiper-button-prev text-white"></div>
             <div className="swiper-button-next text-white"></div>
           </div>
-          {listImage.length > 0 ? (
-            listImage.map((image, index) => {
+          {images.length > 0 ? (
+            images.map((image, index) => {
               return (
                 <SwiperSlide
-                  key={`prod-${index}`}
+                  key={image.id}
                   className={`${simple ? "h-[8.75rem]" : "h-[282px]"}`}
                 >
                   <img
                     className={`${
                       simple ? "rounded-l-xl" : "rounded-t-xl"
-                    } h-full`}
-                    src={image}
-                    alt={`experience-${index}`}
+                    } h-full object-cover object-center mx-auto`}
+                    src={image.url}
+                    alt={image.alt}
                   />
                 </SwiperSlide>
               );
@@ -82,12 +79,10 @@ const Card = ({ simple }: Iprops) => {
         } flex flex-col gap-0.5`}
       >
         <div className=" flex gap-4 justify-start items-start">
-          <h2 className="font-medium text-lg leading-5">Biaka Biodescanso</h2>
-          <ScoreStar scoreStar={3} type="simple" />
+          <h2 className="font-medium text-lg">{title}</h2>
+          <ScoreStar scoreStar={averageScore} type="simple" />
         </div>
-        <p className="text-[0.9375rem]">
-          Glamping en el bosque de los farallones de Cali
-        </p>
+        <p className="text-[0.9375rem]">{description}</p>
         <p className="text-[0.9375rem]">$500.000</p>
       </div>
     </div>
