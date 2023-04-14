@@ -16,7 +16,14 @@ import com.tripMate.demo.repository.UserRepository;
 import com.tripMate.demo.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -39,16 +46,23 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ExperienceMapper expMapper;
 
+    private Map<Long, List<Review>> cachedReviewsByExperienceId = new HashMap<>();
+
 
 
     @Override
-    public Page<ReviewDTO> getAllReviews(int ExperienceId, int page, int size) {
-        return null;
+    public Page<ReviewDTO> getAllReviewsOfAnExperience(int experienceId, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        return  reviewMapper.toListDto(reviewRepository.findeByExperienceId(experienceId, pageable));
     }
+
+
 
     @Override
     public ReviewDTO getReviewByExperienceAndEmail(int experienceId, String email) {
-        return reviewMapper.toReviewDto(reviewRepository.findAnReviewByExperienceIdAndUserEmail(experienceId, email));
+        return reviewMapper.toReviewDto(reviewRepository.findByExperienceIdAndUserEmail(experienceId, email));
     }
 
     @Override
@@ -69,6 +83,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDTO updateReview(ReviewCreateDTO review, String email, int experienceId) {
+
         return null;
     }
 

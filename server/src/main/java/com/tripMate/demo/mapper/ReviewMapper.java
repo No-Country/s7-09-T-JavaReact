@@ -1,12 +1,12 @@
 package com.tripMate.demo.mapper;
 
-import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
 import com.tripMate.demo.entity.Review;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ public interface ReviewMapper {
 
     @InheritInverseConfiguration
     Review  toReview (ReviewDTO dto);
-    List<ReviewDTO> toListDto(List<Review> reviews);
-    List<ReviewDTO> toListReviews(List<ReviewDTO> reviews);
+    Page<ReviewDTO> toListDto(Page<Review> reviews);
+    Page<ReviewDTO> toListReviews(Page<ReviewDTO> reviews);
 
 
 }
