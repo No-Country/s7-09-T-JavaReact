@@ -169,9 +169,25 @@ class ReviewServiceImplTest {
         });
         when(experienceRepository.findById(experience.getId())).thenReturn(Optional.empty());
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
-        //when
-        //then
+        //when and then
         assertThrows(ResourceNotFoundException.class, () -> reviewService.createReview(reviewCreate, experience.getId(), user.getEmail()));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenScoreIsHigherThan5InCreateReview() {
+        //given
+        Experience experience = experienceList.get(0);
+        User user = userList.get(0);
+        ReviewCreateDTO reviewCreate = new ReviewCreateDTO(6, "Muy bueno");
+        when(reviewRepository.save(any(Review.class))).thenAnswer(invocation -> {
+            Review review = invocation.getArgument(0);
+            review.setId(5);
+            return review;
+        });
+        when(experienceRepository.findById(experience.getId())).thenReturn(Optional.of(experience));
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        //when and then
+        assertThrows(Exception.class, () -> reviewService.createReview(reviewCreate, experience.getId(), user.getEmail()));
     }
 
 }
