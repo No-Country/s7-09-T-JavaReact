@@ -238,4 +238,21 @@ class ReviewServiceImplTest {
 
     }
 
+
+
+    @Test
+    void shouldThrowResourceNotFoundExceptionWhenUserNotFoundInUpdateReview() {
+        //given
+        Review review = reviewList.get(0);
+        Experience experience = review.getExperience();
+        User user = review.getUser();
+        ReviewCreateDTO reviewCreate = new ReviewCreateDTO(5, "Muy bueno");
+        when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail())).thenReturn(null);
+        when(experienceRepository.findById(experience.getId())).thenReturn(Optional.of(experience));
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
+        //when
+        //then
+        assertThrows(ResourceNotFoundException.class, () -> reviewService.updateReview(reviewCreate, experience.getId(), user.getEmail()));
+    }
+
 }
