@@ -25,6 +25,4 @@ public interface ReviewMapper {
         return reviewPage.map(this::toReviewDto);
     }
 
-
-
 }

@@ -51,6 +51,15 @@ public class ReviewController {
 
     }
 
+    @PostMapping("/{experienceId}")
+    ResponseEntity<ReviewDTO>updateReview(@PathVariable int experienceId,
+                                          @RequestBody ReviewCreateDTO reviewCreateDTO) throws ResourceNotFoundException {
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity(reviewService.updateReview(reviewCreateDTO, experienceId, userEmail), HttpStatus.NOT_MODIFIED);
+
+    }
+
+
 
 
 }

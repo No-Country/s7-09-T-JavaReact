@@ -1,6 +1,5 @@
 package com.tripMate.demo.service.impl;
 
-import com.tripMate.demo.dto.ExperienceDTO;
 import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
 import com.tripMate.demo.entity.Experience;
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -40,8 +40,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ReviewMapper reviewMapper;
 
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private ExperienceMapper expMapper;
@@ -63,7 +61,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDTO getReviewByExperienceAndEmail(int experienceId, String email) {
-        return reviewMapper.toReviewDto(reviewRepository.findByExperienceIdAndUserEmail(experienceId, email));
+        return reviewMapper.toReviewDto(reviewRepository.findByExperienceIdAndEmail(experienceId, email));
     }
 
     @Override
@@ -72,7 +70,8 @@ public class ReviewServiceImpl implements ReviewService {
         Experience exp = getExperience(experiencieId);
         User user = getUser(email);
 
-        Review review = new Review().builder()
+        new Review();
+        Review review = Review.builder()
                 .review(reviewDto.getReview())
                 .score(reviewDto.getScore())
                 .experience(exp)
@@ -83,9 +82,18 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDTO updateReview(ReviewCreateDTO review, String email, int experienceId) {
+    public ReviewDTO updateReview(ReviewCreateDTO review, int experienceId, String email) throws ResourceNotFoundException {
 
-        return null;
+        Review updateReview = reviewRepository.findByExperienceIdAndEmail(experienceId, email);
+        updateReview.setReview(review.getReview());
+        updateReview.setScore(review.getScore());
+        return reviewMapper.toReviewDto(reviewRepository.save(updateReview));
+
+    }
+
+    @Override
+    public Boolean hasTheAlreadyReviewed(int experienceId, String email) {
+        return reviewRepository.existsByExperienceIdAndEmail(experienceId, email);
     }
 
     private Experience getExperience(int experienceId) throws ResourceNotFoundException {

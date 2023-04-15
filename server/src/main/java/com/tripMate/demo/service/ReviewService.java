@@ -14,7 +14,9 @@ public interface ReviewService {
     Page<ReviewDTO> getAllReviewsOfAnExperience(int experienceId,int page, int size);
     ReviewDTO getReviewByExperienceAndEmail(int experienceId, String email);
     ReviewDTO createReview(ReviewCreateDTO review, int experiencieId, String email) throws ResourceNotFoundException;
-    ReviewDTO updateReview (ReviewCreateDTO review, String email, int experienceId);
+    ReviewDTO updateReview (ReviewCreateDTO review, int experienceId, String email) throws ResourceNotFoundException;
+
+    Boolean hasTheAlreadyReviewed (int experienceId, String email);
 
 
 }
