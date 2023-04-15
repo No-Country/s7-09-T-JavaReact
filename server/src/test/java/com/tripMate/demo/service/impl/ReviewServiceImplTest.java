@@ -88,4 +88,27 @@ class ReviewServiceImplTest {
 
         });
     }
+
+
+    @Test
+    void shouldGetReviewByExperienceAndEmail() {
+        //given
+        User user = userList.get(0);
+        Experience experience = experienceList.get(0);
+        when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail()))
+                .thenReturn(
+                        reviewList.stream().filter(review -> review.getExperience().getId() == experience.getId() && review.getUser().getEmail().equals(user.getEmail())).findFirst().orElse(null)
+                );
+        //when
+        ReviewDTO reviewDTO = reviewService.getReviewByExperienceAndEmail(experience.getId(), user.getEmail());
+        //then
+        assertNotNull(reviewDTO);
+        assertEquals(reviewList.get(0).getReview(), reviewDTO.getReview());
+        assertEquals(reviewList.get(0).getScore(), reviewDTO.getScore());
+        assertEquals(reviewList.get(0).getUser().getId(), reviewDTO.getProfile().getId());
+        assertEquals(reviewList.get(0).getUser().getName(), reviewDTO.getProfile().getName());
+        assertEquals(reviewList.get(0).getUser().getLastname(), reviewDTO.getProfile().getLastname());
+        assertEquals(reviewList.get(0).getExperience().getId(), reviewDTO.getExperienceId());
+    }
+
 }
