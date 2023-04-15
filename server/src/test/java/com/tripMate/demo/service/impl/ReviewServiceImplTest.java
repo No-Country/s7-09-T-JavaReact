@@ -209,4 +209,33 @@ class ReviewServiceImplTest {
         assertThrows(Exception.class, () -> reviewService.createReview(reviewCreate, experience.getId(), user.getEmail()));
     }
 
+
+
+    @Test
+    void shouldUpdateReview() throws ResourceNotFoundException {
+        //given
+        Review review = reviewList.get(0);
+        Experience experience = review.getExperience();
+        User user = review.getUser();
+        ReviewCreateDTO reviewCreate = new ReviewCreateDTO(5, "Muy bueno");
+        when(reviewRepository.save(any(Review.class))).thenAnswer(invocation -> {
+            return invocation.<Review>getArgument(0);
+        });
+        when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail())).thenReturn(review);
+        when(experienceRepository.findById(experience.getId())).thenReturn(Optional.of(experience));
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+
+        //when
+        ReviewDTO reviewDTO = reviewService.updateReview(reviewCreate, experience.getId(), user.getEmail());
+        //then
+        assertNotNull(reviewDTO);
+        assertEquals(reviewCreate.getReview(), reviewDTO.getReview());
+        assertEquals(reviewCreate.getScore(), reviewDTO.getScore());
+        assertEquals(user.getId(), reviewDTO.getProfile().getId());
+        assertEquals(user.getName(), reviewDTO.getProfile().getName());
+        assertEquals(user.getLastname(), reviewDTO.getProfile().getLastname());
+        assertEquals(experience.getId(), reviewDTO.getExperienceId());
+
+    }
+
 }
