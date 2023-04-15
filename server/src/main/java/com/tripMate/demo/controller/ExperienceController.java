@@ -84,6 +84,15 @@ public class ExperienceController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @GetMapping("/find")
+        public ResponseEntity<List<ExperienceDTO>> findByLatitudeLongitudeAndDistance(@RequestParam  float latitude, @RequestParam float longitude, @RequestParam float distance)  {
+        try {
+            List<ExperienceDTO> response = experienceService.findByLatitudeLongitudeAndDistance(latitude,longitude,distance);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 }
 

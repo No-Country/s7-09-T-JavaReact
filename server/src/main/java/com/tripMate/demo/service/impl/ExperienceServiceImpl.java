@@ -94,4 +94,9 @@ public class ExperienceServiceImpl implements ExperienceService {
         return experienceMapper.toExperiencesDTO(experienceRepository.findByTitleContaining(title));
     }
 
+    @Override
+    public List<ExperienceDTO> findByLatitudeLongitudeAndDistance(float latitude, float longitude, float distance) {
+        return experienceMapper.toExperiencesDTO(experienceRepository.findByLatitudeLongitudeAndDistance(latitude,longitude,distance));
+    }
+
 }

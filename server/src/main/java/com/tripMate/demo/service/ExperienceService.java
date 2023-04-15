@@ -4,6 +4,7 @@ import com.tripMate.demo.dto.ExperienceDTO;
 
 import com.tripMate.demo.entity.Experience;
 import com.tripMate.demo.exception.ResourceNotFoundException;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -20,5 +21,6 @@ public interface ExperienceService {
     List<ExperienceDTO> getByCategory(int id);
     List<ExperienceDTO> getByCity(int id);
     List<ExperienceDTO> findByTitleContaining(String title);
+    List<ExperienceDTO> findByLatitudeLongitudeAndDistance( float latitude,float longitude,  float distance);
 
-    }
+}
