@@ -25,6 +25,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
+    /*
     @GetMapping("/{experienceId}")
     ResponseEntity<Page<ReviewDTO>>getAllReviewsByExperience(@PathVariable int experienceId,
                                                              @RequestParam(defaultValue = "0") int page,
@@ -32,7 +33,7 @@ public class ReviewController {
 
         return new ResponseEntity<>(reviewService.getAllReviewsOfAnExperience(experienceId, page, size), HttpStatus.OK);
 
-    }
+    }*/
 
     @GetMapping("/{experienceId}/{userId}")
     ResponseEntity<ReviewDTO>getAllReviewsByExperienceAndUser(@PathVariable int experienceId){

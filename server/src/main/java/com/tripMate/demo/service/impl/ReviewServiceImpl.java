@@ -50,13 +50,14 @@ public class ReviewServiceImpl implements ReviewService {
 
 
 
+    /*
     @Override
     public Page<ReviewDTO> getAllReviewsOfAnExperience(int experienceId, int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
 
         return  reviewMapper.toListDto(reviewRepository.findeByExperienceId(experienceId, pageable));
-    }
+    }*/
 
 
 

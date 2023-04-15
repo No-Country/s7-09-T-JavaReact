@@ -20,8 +20,11 @@ public interface ReviewMapper {
 
     @InheritInverseConfiguration
     Review  toReview (ReviewDTO dto);
-    Page<ReviewDTO> toListDto(Page<Review> reviews);
-    Page<ReviewDTO> toListReviews(Page<ReviewDTO> reviews);
+
+    default Page<ReviewDTO> toDTOPage(Page<Review> reviewPage) {
+        return reviewPage.map(this::toReviewDto);
+    }
+
 
 
 }
