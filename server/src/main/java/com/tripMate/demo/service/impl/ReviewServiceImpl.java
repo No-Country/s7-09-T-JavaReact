@@ -8,7 +8,6 @@ import com.tripMate.demo.entity.User;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.mapper.ExperienceMapper;
 import com.tripMate.demo.mapper.ReviewMapper;
-import com.tripMate.demo.mapper.UserMapper;
 import com.tripMate.demo.repository.ExperienceRepository;
 import com.tripMate.demo.repository.ReviewRepository;
 import com.tripMate.demo.repository.UserRepository;
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {

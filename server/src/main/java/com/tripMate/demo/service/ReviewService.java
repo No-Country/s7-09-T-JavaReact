@@ -2,12 +2,8 @@ package com.tripMate.demo.service;
 
 import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
-import com.tripMate.demo.entity.Review;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface ReviewService {
 

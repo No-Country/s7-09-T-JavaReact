@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class, ExperienceMapper.class})
 public interface ReviewMapper {
