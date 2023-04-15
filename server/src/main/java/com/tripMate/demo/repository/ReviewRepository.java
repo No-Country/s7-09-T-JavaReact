@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
-    Review findByExperienceIdAndEmail(Integer experienceId, String Email);
+    Review findByExperienceIdAndUserEmail(Integer experienceId, String userEmail);
 
-    boolean existsByExperienceIdAndEmail(Integer experienceId, String Email);
+    boolean existsByExperienceIdAndUserEmail(Integer experienceId, String Email);
 
     Page<Review> findByExperienceId(Integer experienceId, Pageable pageable);
 

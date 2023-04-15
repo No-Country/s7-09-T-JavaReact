@@ -43,7 +43,7 @@ public class ReviewController {
 
     }
 
-    @PostMapping("/{experienceId}")
+    @PostMapping("/{experienceId}/create")
     ResponseEntity<ReviewDTO>createReviewsOfAnExperience(@PathVariable int experienceId,
                                                          @RequestBody ReviewCreateDTO reviewCreateDTO) throws ResourceNotFoundException {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -51,11 +51,18 @@ public class ReviewController {
 
     }
 
-    @PostMapping("/{experienceId}")
+    @PutMapping("/{experienceId}")
     ResponseEntity<ReviewDTO>updateReview(@PathVariable int experienceId,
                                           @RequestBody ReviewCreateDTO reviewCreateDTO) throws ResourceNotFoundException {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity(reviewService.updateReview(reviewCreateDTO, experienceId, userEmail), HttpStatus.NOT_MODIFIED);
+
+    }
+
+    @PostMapping("/{experienceId}/exists")
+    ResponseEntity<Boolean>existUserReview(@PathVariable int experienceId) throws ResourceNotFoundException {
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity(reviewService.hasTheAlreadyReviewed(experienceId, userEmail), HttpStatus.OK);
 
     }
 

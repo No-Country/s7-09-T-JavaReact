@@ -61,7 +61,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDTO getReviewByExperienceAndEmail(int experienceId, String email) {
-        return reviewMapper.toReviewDto(reviewRepository.findByExperienceIdAndEmail(experienceId, email));
+        return reviewMapper.toReviewDto(reviewRepository.findByExperienceIdAndUserEmail(experienceId, email));
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewDTO updateReview(ReviewCreateDTO review, int experienceId, String email) throws ResourceNotFoundException {
 
-        Review updateReview = reviewRepository.findByExperienceIdAndEmail(experienceId, email);
+        Review updateReview = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
         updateReview.setReview(review.getReview());
         updateReview.setScore(review.getScore());
         return reviewMapper.toReviewDto(reviewRepository.save(updateReview));
@@ -93,7 +93,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Boolean hasTheAlreadyReviewed(int experienceId, String email) {
-        return reviewRepository.existsByExperienceIdAndEmail(experienceId, email);
+        return reviewRepository.existsByExperienceIdAndUserEmail(experienceId, email);
     }
 
     private Experience getExperience(int experienceId) throws ResourceNotFoundException {
