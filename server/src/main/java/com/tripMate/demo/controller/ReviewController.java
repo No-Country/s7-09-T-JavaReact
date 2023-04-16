@@ -2,6 +2,7 @@ package com.tripMate.demo.controller;
 
 import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
+import com.tripMate.demo.dto.ReviewResponseDTO;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,12 @@ public class ReviewController {
 
 
     @GetMapping("/{experienceId}")
-    ResponseEntity<Page<ReviewDTO>>getAllReviewsByExperience(@PathVariable int experienceId,
-                                                             @RequestParam(defaultValue = "0") int page,
-                                                             @RequestParam(defaultValue = "10") int size){
+    ResponseEntity<ReviewResponseDTO>getAllReviewsByExperience(@PathVariable int experienceId,
+                                                               @RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "10") int size){
 
-        return new ResponseEntity<>(reviewService.getAllReviewsOfAnExperience(experienceId, page, size), HttpStatus.OK);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(reviewService.getAllReviewsPage(experienceId, page, size, email), HttpStatus.OK);
 
     }
 

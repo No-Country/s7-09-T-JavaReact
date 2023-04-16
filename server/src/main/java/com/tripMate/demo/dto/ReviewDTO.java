@@ -10,9 +10,11 @@ import org.springframework.data.domain.Page;
 @Setter
 @AllArgsConstructor
 public class ReviewDTO {
+
     private int id;
     private int score;
     private String review;
     private Profile profile;
     private int experienceId;
+    private String date;
 }

@@ -2,6 +2,7 @@ package com.tripMate.demo.service.impl;
 
 import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
+import com.tripMate.demo.dto.ReviewResponseDTO;
 import com.tripMate.demo.entity.Experience;
 import com.tripMate.demo.entity.Review;
 import com.tripMate.demo.entity.User;
@@ -48,11 +49,17 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public Page<ReviewDTO> getAllReviewsOfAnExperience(int experienceId, int page, int size) {
+    public ReviewResponseDTO getAllReviewsPage(int experienceId, int page, int size, String email) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        ReviewDTO userReview = getReviewByExperienceAndEmail(experienceId, email);
 
-        return  reviewMapper.toDTOPage(reviewRepository.findByExperienceId(experienceId, pageable));
+        Page<ReviewDTO> pageReviews  =  reviewMapper.toDTOPage(reviewRepository.findByExperienceId(experienceId, pageable));
+        new ReviewResponseDTO();
+        return ReviewResponseDTO.builder()
+                .reviews(pageReviews)
+                .userReview(userReview)
+                .build();
     }
 
 

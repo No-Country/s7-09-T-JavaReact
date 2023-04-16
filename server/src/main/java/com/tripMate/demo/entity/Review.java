@@ -3,6 +3,8 @@ package com.tripMate.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Builder
@@ -22,6 +24,9 @@ public class Review {
 
     @Column(name = "REVIEW", length = 800)
     private String review;
+
+    @Column(name = "REVIEW")
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
