@@ -89,6 +89,8 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewDTO updateReview(ReviewCreateDTO review, int experienceId, String email) throws ResourceNotFoundException {
 
         Review updateReview = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
+        if (updateReview == null) throw new ResourceNotFoundException("Review not found");
+
         updateReview.setReview(review.getReview());
         updateReview.setScore(review.getScore());
         updateReview.setDate(LocalDate.now());
