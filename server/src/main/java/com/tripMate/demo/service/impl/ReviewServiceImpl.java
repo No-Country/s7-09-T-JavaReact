@@ -5,6 +5,7 @@ import com.tripMate.demo.dto.ReviewDTO;
 import com.tripMate.demo.entity.Experience;
 import com.tripMate.demo.entity.Review;
 import com.tripMate.demo.entity.User;
+import com.tripMate.demo.exception.BadRequestException;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.mapper.ExperienceMapper;
 import com.tripMate.demo.mapper.ReviewMapper;
@@ -64,10 +65,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDTO createReview(ReviewCreateDTO reviewDto, int experiencieId, String email) throws ResourceNotFoundException {
+    public ReviewDTO createReview(ReviewCreateDTO reviewDto, int experiencieId, String email) throws ResourceNotFoundException, BadRequestException {
 
         if (reviewDto.getScore() < 0 || reviewDto.getScore() > 5) {
-            throw new ResourceNotFoundException("Score must be between 0 and 5");
+            throw new BadRequestException("Score must be between 0 and 5");
         }
 
         Experience exp = getExperience(experiencieId);
@@ -86,7 +87,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDTO updateReview(ReviewCreateDTO review, int experienceId, String email) throws ResourceNotFoundException {
+    public ReviewDTO updateReview(ReviewCreateDTO review, int experienceId, String email) throws ResourceNotFoundException, BadRequestException {
+
+        if (review.getScore() < 0 || review.getScore() > 5) {
+            throw new BadRequestException("Score must be between 0 and 5");
+        }
 
         Review updateReview = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
         if (updateReview == null) throw new ResourceNotFoundException("Review not found");
