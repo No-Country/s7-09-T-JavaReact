@@ -20,9 +20,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -64,7 +68,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDTO getReviewByExperienceAndEmail(int experienceId, String email) {
-        return reviewMapper.toReviewDto(reviewRepository.findByExperienceIdAndUserEmail(experienceId, email));
+        Review userReview = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
+        userReview.setDate(calculateDaysFromTheReviewWasDone.apply(userReview.getDate()));
+        return reviewMapper.toReviewDto(userReview);
     }
 
     @Override
@@ -95,6 +101,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public void deleteUserReview(int experienceId, String email) throws ResourceNotFoundException {
+
+    }
+
+    @Override
     public Boolean hasTheAlreadyReviewed(int experienceId, String email) {
         return reviewRepository.existsByExperienceIdAndUserEmail(experienceId, email);
     }
@@ -110,4 +121,33 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(()-> new ResourceNotFoundException("user not found"));
 
     }
+
+    private static Function<String, String> calculateDaysFromTheReviewWasDone = date -> {
+        DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate today = LocalDate.now();
+        LocalDate formattedDate = LocalDate.parse(date, pattern);
+        long noOfDaysBetween = ChronoUnit.DAYS.between(formattedDate, today);
+
+        return (noOfDaysBetween == 0) ? "Hoy"
+                : (noOfDaysBetween <= 30) ? "Hace " + noOfDaysBetween + " días"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 1) ? "Hace 1 mes"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 2) ? "Hace 1 mes"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 3) ? "Hace 2 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 4) ? "Hace 3 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 5) ? "Hace 4 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 6) ? "Hace 5 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 7) ? "Hace 6 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 8) ? "Hace 7 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 9) ? "Hace 8 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 10) ? "Hace 9 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 11) ? "Hace 10 meses"
+                : (noOfDaysBetween <= Math.ceil(365 / 12) * 12) ? "Hace 11 meses"
+                : (noOfDaysBetween <= 365) ? "Hace 1 año"
+                : (noOfDaysBetween <= 365 * 2) ? "Hace 1 año"
+                : (noOfDaysBetween <= 365 * 3) ? "Hace 2 años"
+                : (noOfDaysBetween <= 365 * 4) ? "Hace 3 años"
+                : (noOfDaysBetween <= 365 * 5) ? "Hace 4 años"
+                : (noOfDaysBetween <= 365 * 6) ? "Hace 5 años"
+                : "Hace mas de 5 años";
+    };
 }

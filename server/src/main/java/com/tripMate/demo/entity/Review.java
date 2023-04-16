@@ -26,7 +26,7 @@ public class Review {
     private String review;
 
     @Column(name = "REVIEW_DATE")
-    private LocalDate date;
+    private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

@@ -13,7 +13,10 @@ public interface ReviewService {
     ReviewDTO createReview(ReviewCreateDTO review, int experiencieId, String email) throws ResourceNotFoundException;
     ReviewDTO updateReview (ReviewCreateDTO review, int experienceId, String email) throws ResourceNotFoundException;
 
+    void deleteUserReview (int experienceId, String email) throws ResourceNotFoundException;
+
     Boolean hasTheAlreadyReviewed (int experienceId, String email);
+
 
 
 }
