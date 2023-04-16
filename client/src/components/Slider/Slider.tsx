@@ -31,4 +31,5 @@ const Slider = () => {
 		</Swiper>
 	);
 };
+
 export default Slider;
