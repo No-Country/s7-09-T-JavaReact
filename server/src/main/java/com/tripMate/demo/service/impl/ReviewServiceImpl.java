@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewDTO createReview(ReviewCreateDTO reviewDto, int experiencieId, String email) throws ResourceNotFoundException {
 
+        if (reviewDto.getScore() < 0 || reviewDto.getScore() > 5) {
+            throw new ResourceNotFoundException("Score must be between 0 and 5");
+        }
+
         Experience exp = getExperience(experiencieId);
         User user = getUser(email);
 
@@ -74,6 +79,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .score(reviewDto.getScore())
                 .experience(exp)
                 .user(user)
+                .date(LocalDate.now())
                 .build();
 
         return reviewMapper.toReviewDto(reviewRepository.save(review));
