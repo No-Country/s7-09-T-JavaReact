@@ -85,8 +85,16 @@ class ReviewServiceImplTest {
             assertEquals(review.getUser().getName(), reviewDTO.getProfile().getName());
             assertEquals(review.getUser().getLastname(), reviewDTO.getProfile().getLastname());
             assertEquals(review.getExperience().getId(), reviewDTO.getExperienceId());
+            assertEquals(review.getDate(), reviewDTO.getDate());
 
         });
+    }
+
+    @Test
+    void shouldThrowResourceNotFoundExceptionWhenGetAllReviewsOfAnExperience() {
+        when(reviewRepository.findByExperienceId(eq(404), any(Pageable.class))).thenReturn(new PageImpl<>(new ArrayList<>()));
+        when(experienceRepository.findById(404)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> reviewService.getAllReviewsOfAnExperience(404, 0, 10));
     }
 
 
@@ -109,6 +117,7 @@ class ReviewServiceImplTest {
         assertEquals(reviewList.get(0).getUser().getName(), reviewDTO.getProfile().getName());
         assertEquals(reviewList.get(0).getUser().getLastname(), reviewDTO.getProfile().getLastname());
         assertEquals(reviewList.get(0).getExperience().getId(), reviewDTO.getExperienceId());
+        assertEquals(reviewList.get(0).getDate(), reviewDTO.getDate());
     }
 
     @Test
@@ -134,6 +143,7 @@ class ReviewServiceImplTest {
         assertEquals(user.getName(), reviewDTO.getProfile().getName());
         assertEquals(user.getLastname(), reviewDTO.getProfile().getLastname());
         assertEquals(experience.getId(), reviewDTO.getExperienceId());
+        assertEquals(LocalDate.now(), reviewDTO.getDate());
     }
 
 
