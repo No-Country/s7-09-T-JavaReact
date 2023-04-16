@@ -1,6 +1,5 @@
 package com.tripMate.demo.service.impl;
 
-import com.tripMate.demo.dto.ExperienceDTO;
 import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
 import com.tripMate.demo.entity.*;
@@ -10,7 +9,6 @@ import com.tripMate.demo.repository.ExperienceRepository;
 import com.tripMate.demo.repository.ReviewRepository;
 import com.tripMate.demo.repository.UserRepository;
 import com.tripMate.demo.service.ReviewService;
-import com.tripMate.demo.service.UserService;
 import com.tripMate.demo.util.RoleEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -63,13 +62,13 @@ class ReviewServiceImplTest {
         Experience experience1 = new Experience(1, "Museo de Arte", "Museo de arte de la ciudad", "",null, category, new City(1, "", "", ""), reviewList,"", 4f, 1f, 1f);
         experienceList.add(experience1);
 
-        reviewList.add(new Review(1, 4, "Muy bueno", userList.get(0), experience1));
-        reviewList.add(new Review(2, 5, "Excelente", userList.get(1), experience1));
-        reviewList.add(new Review(3, 3, "Bueno", userList.get(2), experience1));
+        reviewList.add(new Review(1, 4, "Muy bueno", LocalDate.of(2000, 6, 9), userList.get(0), experience1));
+        reviewList.add(new Review(2, 5, "Excelente", LocalDate.of(2000, 6, 9), userList.get(1), experience1));
+        reviewList.add(new Review(3, 3, "Bueno", LocalDate.of(2000, 6, 9), userList.get(2), experience1));
     }
 
     @Test
-    void shouldGetAllReviewsOfAnExperience() {
+    void shouldGetAllReviewsOfAnExperience() throws ResourceNotFoundException {
         Page<Review> experiences = new PageImpl<>(reviewList);
         when(reviewRepository.findByExperienceId(eq(1), any(Pageable.class))).thenReturn(experiences);
         Page<ReviewDTO> reviews = reviewService.getAllReviewsOfAnExperience(1, 0, 10);
@@ -245,6 +244,7 @@ class ReviewServiceImplTest {
         assertEquals(user.getName(), reviewDTO.getProfile().getName());
         assertEquals(user.getLastname(), reviewDTO.getProfile().getLastname());
         assertEquals(experience.getId(), reviewDTO.getExperienceId());
+        assertEquals(LocalDate.now(), reviewDTO.getDate());
 
     }
 
