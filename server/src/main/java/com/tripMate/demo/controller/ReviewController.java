@@ -59,12 +59,16 @@ public class ReviewController {
 
     @PostMapping("/{experienceId}/exists")
     ResponseEntity<Boolean>existUserReview(@PathVariable int experienceId) throws ResourceNotFoundException {
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        return new ResponseEntity(reviewService.hasTheAlreadyReviewed(experienceId, userEmail), HttpStatus.OK);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity(reviewService.hasTheAlreadyReviewed(experienceId, email), HttpStatus.OK);
 
     }
 
-
-
-
+    @DeleteMapping("/{experienceId}")
+    ResponseEntity deleteUserReview(@PathVariable int experienceId) throws ResourceNotFoundException {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        reviewService.deleteUserReview(experienceId, email);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    
 }
