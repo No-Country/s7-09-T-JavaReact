@@ -3,6 +3,7 @@ package com.tripMate.demo.service.impl;
 import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
 import com.tripMate.demo.entity.*;
+import com.tripMate.demo.exception.BadRequestException;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.mapper.ReviewMapper;
 import com.tripMate.demo.repository.ExperienceRepository;
@@ -281,7 +282,7 @@ class ReviewServiceImplTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenScoreIsHigherThan5InUpdateReview() {
+    void shouldThrowExceptionWhenScoreIsHigherThan5InUpdateReview() throws ResourceNotFoundException {
         //given
         Experience experience = experienceList.get(0);
         User user = userList.get(0);
@@ -293,8 +294,9 @@ class ReviewServiceImplTest {
         });
         when(experienceRepository.findById(experience.getId())).thenReturn(Optional.of(experience));
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail())).thenReturn(reviewList.get(0));
         //when and then
-        assertThrows(Exception.class, () -> reviewService.createReview(reviewCreate, experience.getId(), user.getEmail()));
+        assertThrows(BadRequestException.class, () -> reviewService.updateReview(reviewCreate, experience.getId(), user.getEmail()));
     }
 
     @Test
@@ -310,8 +312,9 @@ class ReviewServiceImplTest {
         });
         when(experienceRepository.findById(experience.getId())).thenReturn(Optional.of(experience));
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail())).thenReturn(reviewList.get(0));
         //when and then
-        assertThrows(Exception.class, () -> reviewService.createReview(reviewCreate, experience.getId(), user.getEmail()));
+        assertThrows(BadRequestException.class, () -> reviewService.updateReview(reviewCreate, experience.getId(), user.getEmail()));
     }
 
 }
