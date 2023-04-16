@@ -23,4 +23,8 @@ public interface ExperienceService {
     List<ExperienceDTO> findByTitleContaining(String title);
     List<ExperienceDTO> findByLatitudeLongitudeAndDistance( float latitude,float longitude,  float distance);
 
+    List<ExperienceDTO> findByLatitudeLongitudeDistanceAndCategory( float latitude,float longitude,float distance, int categoryId);
+
+    List<ExperienceDTO> findByCategoryIdAndCityId(int categoryId, int cityId);
+
 }
