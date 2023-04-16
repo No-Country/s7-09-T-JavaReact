@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,9 +58,9 @@ class ReviewMapperTest {
                 .averageScore(2.00f)
                 .build();
         reviews.add(
-                new Review(1, 5,"asdopñfgopsdg", user, experience));
+                new Review(1, 5,"asdopñfgopsdg", LocalDate.of(2000,9,6), user, experience));
         reviewDTOS.add(
-                new ReviewDTO(1, 5,"asdopñfgopsdg", profile, experience.getId()));
+                new ReviewDTO(1, 5,"asdopñfgopsdg", LocalDate.of(2000,9,6), profile, experience.getId()));
 
     }
 
