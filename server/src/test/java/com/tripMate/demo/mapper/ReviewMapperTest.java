@@ -75,6 +75,7 @@ class ReviewMapperTest {
             assertEquals(review.getUser().getName(), reviewDTO.getProfile().getName());
             assertEquals(review.getUser().getLastname(), reviewDTO.getProfile().getLastname());
             assertEquals(review.getExperience().getId(), reviewDTO.getExperienceId() );
+            assertEquals(review.getDate(), reviewDTO.getDate() );
         });
     }
 
@@ -89,6 +90,7 @@ class ReviewMapperTest {
             assertEquals(reviewDTO.getProfile().getName(), review.getUser().getName());
             assertEquals(reviewDTO.getProfile().getLastname(), review.getUser().getLastname());
             assertEquals(reviewDTO.getExperienceId(), review.getExperience().getId() );
+            assertEquals(reviewDTO.getDate(), review.getDate() );
         });
     }
 }
