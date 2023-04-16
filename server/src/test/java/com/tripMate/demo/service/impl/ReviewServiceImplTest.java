@@ -71,6 +71,7 @@ class ReviewServiceImplTest {
     void shouldGetAllReviewsOfAnExperience() throws ResourceNotFoundException {
         Page<Review> experiences = new PageImpl<>(reviewList);
         when(reviewRepository.findByExperienceId(eq(1), any(Pageable.class))).thenReturn(experiences);
+        when(experienceRepository.findById(1)).thenReturn(Optional.of(experienceList.get(0)));
         Page<ReviewDTO> reviews = reviewService.getAllReviewsOfAnExperience(1, 0, 10);
         assertEquals(3, reviews.getSize());
         reviews.forEach(reviewDTO -> {
