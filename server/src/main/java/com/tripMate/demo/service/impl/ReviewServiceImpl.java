@@ -48,11 +48,11 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public Page<ReviewDTO> getAllReviewsOfAnExperience(int experienceId, int page, int size) {
-
+    public Page<ReviewDTO> getAllReviewsOfAnExperience(int experienceId, int page, int size) throws ResourceNotFoundException {
+        getExperience(experienceId);
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
 
-        return  reviewMapper.toDTOPage(reviewRepository.findByExperienceId(experienceId, pageable));
+        return  reviewRepository.findByExperienceId(experienceId, pageable).map(reviewMapper::toReviewDto);
     }
 
 
