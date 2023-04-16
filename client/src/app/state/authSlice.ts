@@ -10,7 +10,7 @@ export const initialAuth: InitialAuth = {
   user: {
     id: 0,
     name: "",
-    lastName: "",
+    lastname: "",
     email: "",
     role: "",
   },
