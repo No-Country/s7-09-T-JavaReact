@@ -43,8 +43,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ExperienceMapper expMapper;
 
-    private Map<Long, List<Review>> cachedReviewsByExperienceId = new HashMap<>();
-
 
 
 
@@ -54,7 +52,7 @@ public class ReviewServiceImpl implements ReviewService {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
         ReviewDTO userReview = getReviewByExperienceAndEmail(experienceId, email);
 
-        Page<ReviewDTO> pageReviews  =  reviewMapper.toDTOPage(reviewRepository.findByExperienceId(experienceId, pageable));
+        Page<ReviewDTO> pageReviews  =  reviewMapper.toDTOPage(reviewRepository.findByExperienceIdOrderByIdDesc(experienceId, pageable));
         new ReviewResponseDTO();
         return ReviewResponseDTO.builder()
                 .reviews(pageReviews)

@@ -25,7 +25,7 @@ public class Review {
     @Column(name = "REVIEW", length = 800)
     private String review;
 
-    @Column(name = "REVIEW")
+    @Column(name = "REVIEW_DATE")
     private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)

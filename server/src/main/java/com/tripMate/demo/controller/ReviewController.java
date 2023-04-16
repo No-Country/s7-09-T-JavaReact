@@ -32,13 +32,14 @@ public class ReviewController {
 
     }
 
+    /*
     @GetMapping("/{experienceId}/{userId}")
     ResponseEntity<ReviewDTO>getAllReviewsByExperienceAndUser(@PathVariable int experienceId){
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity(reviewService.getReviewByExperienceAndEmail(experienceId, userEmail), HttpStatus.OK);
 
-    }
+    }*/
 
     @PostMapping("/{experienceId}/create")
     ResponseEntity<ReviewDTO>createReviewsOfAnExperience(@PathVariable int experienceId,
