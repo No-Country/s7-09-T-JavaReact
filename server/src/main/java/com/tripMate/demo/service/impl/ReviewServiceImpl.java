@@ -91,6 +91,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review updateReview = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
         updateReview.setReview(review.getReview());
         updateReview.setScore(review.getScore());
+        updateReview.setDate(LocalDate.now());
         return reviewMapper.toReviewDto(reviewRepository.save(updateReview));
 
     }
