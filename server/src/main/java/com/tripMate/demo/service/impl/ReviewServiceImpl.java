@@ -6,6 +6,7 @@ import com.tripMate.demo.entity.Experience;
 import com.tripMate.demo.entity.Review;
 import com.tripMate.demo.entity.User;
 import com.tripMate.demo.exception.BadRequestException;
+import com.tripMate.demo.exception.ResourceAlreadyExistsException;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.mapper.ExperienceMapper;
 import com.tripMate.demo.mapper.ReviewMapper;
@@ -65,7 +66,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDTO createReview(ReviewCreateDTO reviewDto, int experiencieId, String email) throws ResourceNotFoundException, BadRequestException {
+    public ReviewDTO createReview(ReviewCreateDTO reviewDto, int experiencieId, String email) throws ResourceNotFoundException, BadRequestException, ResourceAlreadyExistsException {
 
         if (reviewDto.getScore() < 0 || reviewDto.getScore() > 5) {
             throw new BadRequestException("Score must be between 0 and 5");
@@ -73,6 +74,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         Experience exp = getExperience(experiencieId);
         User user = getUser(email);
+        if(getReviewByExperienceAndEmail(experiencieId, email) != null) throw new ResourceAlreadyExistsException("You have already reviewed this experience");
 
         new Review();
         Review review = Review.builder()

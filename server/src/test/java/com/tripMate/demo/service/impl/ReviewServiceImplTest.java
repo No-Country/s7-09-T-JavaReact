@@ -123,7 +123,7 @@ class ReviewServiceImplTest {
     }
 
     @Test
-    void shouldCreateReview() throws ResourceNotFoundException, BadRequestException {
+    void shouldCreateReview() throws ResourceNotFoundException, BadRequestException, ResourceAlreadyExistsException {
         //given
         Experience experience = experienceList.get(0);
         User user = userList.get(0);
