@@ -4,6 +4,7 @@ import com.tripMate.demo.dto.ReviewCreateDTO;
 import com.tripMate.demo.dto.ReviewDTO;
 import com.tripMate.demo.entity.*;
 import com.tripMate.demo.exception.BadRequestException;
+import com.tripMate.demo.exception.ResourceAlreadyExistsException;
 import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.mapper.ReviewMapper;
 import com.tripMate.demo.repository.ExperienceRepository;
@@ -145,6 +146,23 @@ class ReviewServiceImplTest {
         assertEquals(user.getLastname(), reviewDTO.getProfile().getLastname());
         assertEquals(experience.getId(), reviewDTO.getExperienceId());
         assertEquals(LocalDate.now(), reviewDTO.getDate());
+    }
+
+    @Test
+    void shouldThrowResourceAlreadyExistsExceptionWhenCreateReview() {
+        //given
+        Experience experience = experienceList.get(0);
+        User user = userList.get(0);
+        ReviewCreateDTO reviewCreate = new ReviewCreateDTO(5, "Muy bueno");
+        when(experienceRepository.findById(experience.getId())).thenReturn(Optional.of(experience));
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail()))
+                .thenReturn(
+                        reviewList.stream().filter(review -> review.getExperience().getId() == experience.getId() && review.getUser().getEmail().equals(user.getEmail())).findFirst().orElse(null)
+                );
+        //when
+        //then
+        assertThrows(ResourceAlreadyExistsException.class, () -> reviewService.createReview(reviewCreate, experience.getId(), user.getEmail()));
     }
 
 
