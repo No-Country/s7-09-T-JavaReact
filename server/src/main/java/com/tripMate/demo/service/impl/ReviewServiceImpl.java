@@ -42,14 +42,6 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewMapper reviewMapper;
 
 
-    @Autowired
-    private ExperienceMapper expMapper;
-
-    private Map<Long, List<Review>> cachedReviewsByExperienceId = new HashMap<>();
-
-
-
-
     @Override
     public Page<ReviewDTO> getAllReviewsOfAnExperience(int experienceId, int page, int size) throws ResourceNotFoundException {
         getExperience(experienceId);
