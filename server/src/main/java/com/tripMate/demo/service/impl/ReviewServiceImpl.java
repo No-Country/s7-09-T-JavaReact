@@ -98,11 +98,6 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Boolean hasTheAlreadyReviewed(int experienceId, String email) {
-        return reviewRepository.existsByExperienceIdAndUserEmail(experienceId, email);
-    }
-
-    @Override
     public void deleteReview(int experienceId, String email) throws ResourceNotFoundException {
         Review review = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
         if (review == null) throw new ResourceNotFoundException("Review not found");
