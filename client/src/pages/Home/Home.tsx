@@ -9,6 +9,13 @@ import family from "../../assets/icons/family.svg";
 import food from "../../assets/icons/food.svg";
 import tourism from "../../assets/icons/tourism.svg";
 import Experiences from "../../components/Experiences/Experiences";
+import {
+  useGetExperiences,
+  useGetExperiencesByTitle,
+} from "../../hooks/useExperiences";
+import { useState } from "react";
+import { Experiences as ExperiencesModel } from "../../models/Experiences";
+import Spinner from "../../components/Spinner/Spinner";
 
 const categories = [
   {
@@ -38,6 +45,33 @@ const categories = [
 ];
 
 const Home = () => {
+  const onSuccess = (data: ExperiencesModel) => {
+    setExperiences(data);
+  };
+  const [experiences, setExperiences] = useState<ExperiencesModel>(
+    {} as ExperiencesModel
+  );
+  const { isLoading, isFetching } = useGetExperiences(onSuccess);
+  const [title, setTitle] = useState("");
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
+  const onSuccessSearch = (searchResult: ExperiencesModel) => {
+    setExperiences(searchResult);
+  };
+
+  const onError = (data: ExperiencesModel) => {
+    setExperiences(data);
+  };
+
+  const { refetch } = useGetExperiencesByTitle(title, onSuccessSearch, onError);
+
+  const onSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    refetch();
+  };
 
   return (
     <div className="w-full flex flex-col justify-between pb-6">
@@ -47,7 +81,10 @@ const Home = () => {
             <h2 className="text-center lg:w-3/5 lg:text-start font-bold text-2xl lg:text-5xl px-16 lg:p-0">
               Disfrutar de una Experiencia ahora está a tu alcance
             </h2>
-            <form className="w-full lg:w-2/5 self-start">
+            <form
+              onSubmit={onSearch}
+              className="w-full lg:w-2/5 self-start"
+            >
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-1 hover:cursor-pointer">
                   <i className="h-full flex items-center justify-center px-1 hover:cursor-pointer">
@@ -55,10 +92,12 @@ const Home = () => {
                   </i>
                 </div>
                 <input
+                  onChange={handleOnChange}
                   type="search"
                   id="default-search"
                   className="block w-full p-2 pl-9 text-sm text-gray-500 font placeholder:text-gray-500 placeholder:font-normal focus:outline-none border border-gray-300 rounded-lg bg-slate-100"
                   placeholder="Buscar experiencias"
+                  minLength={4}
                 />
                 <button
                   type="submit"
@@ -84,7 +123,7 @@ const Home = () => {
                 ))
               : null}
           </div>
-          <Experiences />
+          {isLoading || isFetching ? <Spinner /> : <Experiences isLoading={isLoading} isFetching={isFetching} experiencesData={experiences} />}
         </div>
       </div>
     </div>
