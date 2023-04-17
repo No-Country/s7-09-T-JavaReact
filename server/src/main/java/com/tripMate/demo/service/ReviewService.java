@@ -17,4 +17,5 @@ public interface ReviewService {
     Boolean hasTheAlreadyReviewed (int experienceId, String email);
 
 
+    void deleteReview(int experienceId, String email) throws ResourceNotFoundException;
 }

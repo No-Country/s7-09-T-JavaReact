@@ -110,6 +110,13 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.existsByExperienceIdAndUserEmail(experienceId, email);
     }
 
+    @Override
+    public void deleteReview(int experienceId, String email) throws ResourceNotFoundException {
+        Review review = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
+        if (review == null) throw new ResourceNotFoundException("Review not found");
+        reviewRepository.delete(review);
+    }
+
     private Experience getExperience(int experienceId) throws ResourceNotFoundException {
         return experienceRepository.findById(experienceId)
                 .orElseThrow(()-> new ResourceNotFoundException("experience not found"));
