@@ -30,7 +30,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class ReviewServiceImplTest {
@@ -333,6 +333,31 @@ class ReviewServiceImplTest {
         when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail())).thenReturn(reviewList.get(0));
         //when and then
         assertThrows(BadRequestException.class, () -> reviewService.updateReview(reviewCreate, experience.getId(), user.getEmail()));
+    }
+
+    @Test
+    void shouldDeleteReview() throws ResourceNotFoundException {
+        //given
+        Review review = reviewList.get(0);
+        Experience experience = review.getExperience();
+        User user = review.getUser();
+        when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail())).thenReturn(review);
+        //when
+        reviewService.deleteReview(experience.getId(), user.getEmail());
+        //then
+        verify(reviewRepository, times(1)).delete(review);
+    }
+
+    @Test
+    void shouldThrowResourceNotFoundExceptionWhenUserNotFoundInDeleteReview() {
+        //given
+        Review review = reviewList.get(0);
+        Experience experience = review.getExperience();
+        User user = review.getUser();
+        when(reviewRepository.findByExperienceIdAndUserEmail(experience.getId(), user.getEmail())).thenReturn(null);
+        //when
+        //then
+        assertThrows(ResourceNotFoundException.class, () -> reviewService.deleteReview(experience.getId(), user.getEmail()));
     }
 
 }
