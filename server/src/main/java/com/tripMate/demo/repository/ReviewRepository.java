@@ -15,7 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     boolean existsByExperienceIdAndUserEmail(Integer experienceId, String Email);
 
-    Page<Review> findByExperienceIdOrderByIdDesc(Integer experienceId, Pageable pageable);
+    Page<Review> findByExperienceId(Integer experienceId, Pageable pageable);
 
     Page<Review> findByUserEmail(String userEmail, Pageable pageable);
 }
