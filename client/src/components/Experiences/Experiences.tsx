@@ -21,6 +21,7 @@ const Experiences = () => {
                       averageScore={experience.averageScore}
                       description={experience.description}
                       title={experience.title}
+                      subtitle={experience.subtitle}
                       images={experience.images}
                     />
                   </Link>

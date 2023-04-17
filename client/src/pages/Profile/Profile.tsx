@@ -95,7 +95,7 @@ const Profile = () => {
                   title={card.title}
                   images={card.images}
                   averageScore={card.averageScore}
-                  description={card.description}
+                  subtitle={card.subtitle}
                 />
               </div>
             );
