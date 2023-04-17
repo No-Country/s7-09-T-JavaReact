@@ -17,5 +17,4 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     Page<Review> findByExperienceId(Integer experienceId, Pageable pageable);
 
-    Page<Review> findByUserEmail(String userEmail, Pageable pageable);
 }

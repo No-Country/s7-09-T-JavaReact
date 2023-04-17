@@ -14,8 +14,5 @@ public interface ReviewService {
     ReviewDTO createReview(ReviewCreateDTO review, int experiencieId, String email) throws ResourceNotFoundException, BadRequestException, ResourceAlreadyExistsException;
     ReviewDTO updateReview (ReviewCreateDTO review, int experienceId, String email) throws ResourceNotFoundException, BadRequestException;
 
-    Boolean hasTheAlreadyReviewed (int experienceId, String email);
-
-
     void deleteReview(int experienceId, String email) throws ResourceNotFoundException;
 }
