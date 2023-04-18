@@ -1,12 +1,14 @@
 package com.tripMate.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +27,6 @@ public class Experience {
     private int id;
 
     @Column(name = "TITLE", length = 350, nullable = false)
-    @NonNull
     private String title;
 
     @Column(name = "SUBTITLE", length = 350, nullable = false)
@@ -50,14 +51,15 @@ public class Experience {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NonNull
     private Category category;
 
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CITY_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @NonNull
     private City city;
+
+    @OneToMany(mappedBy = "experience")
+    private List<Review> reviews = new ArrayList<>();
 
 /*
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
@@ -70,8 +72,15 @@ public class Experience {
     @Column(name = "ADDRESS", length = 350)
     private String address;
 
-    @Column(name = "AVERAGE_SCORE")
-    private float averageScore;
+//    @Column(name = "AVERAGE_SCORE")
+//    private float averageScore;
+
+    @Column(name = "TOTAL_SCORE")
+    @ColumnDefault("0")
+    private int totalScore;
+    @Column(name = "TOTAL_REVIEWS")
+    @ColumnDefault("0")
+    private int totalReviews;
 
     @Column(name = "LATITUDE")
     private float latitude;

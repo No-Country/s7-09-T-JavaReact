@@ -1,7 +1,6 @@
 package com.tripMate.demo.dto;
 
 
-import com.tripMate.demo.entity.Role;
 import com.tripMate.demo.util.RoleEnum;
 import lombok.*;
 
