@@ -39,15 +39,21 @@ const Navbar = () => {
       >
         <img className="w-28" src={TripmateLogo} alt="Tripmate" />
         <div className="flex gap-6 items-center">
-          {links.map((link) => (
-            <NavLink
-              className="font-normal text-sm py-2 px-3"
-              key={link.title}
-              to={link.path}
-            >
-              {link.title}
-            </NavLink>
-          ))}
+          {links.map((link) => {
+            if (link.title !== "Perfil" || auth.token) {
+              return (
+                <NavLink
+                  className="font-normal text-sm py-2 px-3"
+                  key={link.title}
+                  to={link.path}
+                >
+                  {link.title}
+                </NavLink>
+              );
+            } else {
+              return <div key={link.title}></div>;
+            }
+          })}
           {!auth.token && (
             <div className="flex w-fit gap-3 items-stretch">
               <Link
@@ -64,7 +70,7 @@ const Navbar = () => {
               </Link>
             </div>
           )}
-          <LogoutButton />
+          {auth.token && <LogoutButton />}
         </div>
       </nav>
 
@@ -103,17 +109,23 @@ const Navbar = () => {
               </Link>
             </div>
           )}
-          {links.map((link) => (
-            <NavLink
-              className="font-normal text-sm py-2 px-3"
-              key={link.title}
-              to={link.path}
-              onClick={CloseMenu}
-            >
-              {link.title}
-            </NavLink>
-          ))}
-          <LogoutButton />
+          {links.map((link) => {
+            if (link.title !== "Perfil" || auth.token) {
+              return (
+                <NavLink
+                  className="font-normal text-sm py-2 px-3"
+                  key={link.title}
+                  to={link.path}
+                  onClick={CloseMenu}
+                >
+                  {link.title}
+                </NavLink>
+              );
+            } else {
+              return <div key={link.title}></div>;
+            }
+          })}
+          {auth.token && <LogoutButton />}
           <div className="flex items-end pb-6 w-full h-full">
             <img className="w-20" src={TripmateLogo} alt="Tripmate" />
           </div>

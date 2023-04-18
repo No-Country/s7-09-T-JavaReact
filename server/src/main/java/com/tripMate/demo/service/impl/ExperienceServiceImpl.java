@@ -54,7 +54,6 @@ public class ExperienceServiceImpl implements ExperienceService {
             existingExperience.setSubtitle(experience.getSubtitle());
         }
         existingExperience.setDescription(experience.getDescription());
-        existingExperience.setAverageScore(experience.getAverageScore());
         existingExperience.setLatitude(experience.getLatitude());
         existingExperience.setLongitude(experience.getLongitude());
         existingExperience.setPrice(experience.getPrice());

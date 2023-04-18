@@ -83,10 +83,11 @@ public class SecurityConfiguration {
             auth.requestMatchers(HttpMethod.GET, "/api/cities/**").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/api/experiences/**").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/api/images/**").permitAll();
-
-
+            auth.requestMatchers(HttpMethod.GET, "/api/experiences/**/reviews").permitAll();
 
             // endpoints for authenticated users
+            auth.requestMatchers("/api/experiences/**/reviews").hasAuthority("SCOPE_ROLE_USER");
+
 
             // endpoints for admin users
         });

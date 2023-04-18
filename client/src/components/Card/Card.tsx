@@ -13,7 +13,7 @@ interface Iprops {
 
 type Props = Iprops & Experience;
 
-const Card = ({ simple, title, averageScore, description, images }: Props) => {
+const Card = ({ simple, title, averageScore, subtitle, images }: Props) => {
   const ref = useRef<SwiperRef>(null);
 
   return (
@@ -82,7 +82,7 @@ const Card = ({ simple, title, averageScore, description, images }: Props) => {
           <h2 className="font-medium text-lg">{title}</h2>
           <ScoreStar scoreStar={averageScore} type="simple" />
         </div>
-        <p className="text-[0.9375rem]">{description}</p>
+        <p className="text-[0.9375rem]">{subtitle}</p>
         <p className="text-[0.9375rem]">$500.000</p>
       </div>
     </div>
