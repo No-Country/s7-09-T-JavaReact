@@ -1,7 +1,7 @@
-server:
-  ssl:
-    key-store: classpath:mycert.p12
-    key-store-password: ${KEY_STORE_PASSWORD}
-    key-alias: myKey
-    key-password: ${KEY_PASSWORD}
-    key-store-type: pkcs12
+#server:
+#  ssl:
+#    key-store: classpath:mycert.p12
+#    key-store-password: ${KEY_STORE_PASSWORD}
+#    key-alias: myKey
+#    key-password: ${KEY_PASSWORD}
+#    key-store-type: pkcs12
