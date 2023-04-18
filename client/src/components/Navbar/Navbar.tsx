@@ -35,7 +35,7 @@ const Navbar = () => {
     <div className="relative flex flex-grow justify-between p-3 bg-white drop-shadow-md z-50">
       <nav
         id="navbar"
-        className="hidden lg:flex flex-grow max-w-6xl mx-auto items-center justify-between"
+        className="hidden md:flex flex-grow max-w-6xl mx-auto items-center justify-between"
       >
         <img className="w-28" src={TripmateLogo} alt="Tripmate" />
         <div className="flex gap-6 items-center">
@@ -74,10 +74,10 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <button className="lg:hidden text-2xl text-slate-500" onClick={OpenMenu}>
+      <button className="md:hidden text-2xl text-slate-500" onClick={OpenMenu}>
         <IoMenuSharp />
       </button>
-      <img className="w-28 lg:hidden" src={TripmateLogo} alt="Tripmate" />
+      <img className="w-28 md:hidden" src={TripmateLogo} alt="Tripmate" />
       <div
         ref={ref}
         className={`lg:hidden absolute top-0 ${

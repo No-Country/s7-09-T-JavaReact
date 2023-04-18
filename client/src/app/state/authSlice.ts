@@ -3,6 +3,7 @@ import { InitialAuth } from "../../models/InitialAuth";
 import {
   getLocalStorage,
   clearLocalStorage,
+  setLocalStorage,
 } from "../../utils/LocalStorageFunctions";
 
 export const initialAuth: InitialAuth = {
@@ -13,6 +14,12 @@ export const initialAuth: InitialAuth = {
     lastname: "",
     email: "",
     role: "",
+  },
+  position: {
+    coords: {
+      latitude: 0,
+      longitude: 0,
+    },
   },
 };
 
@@ -25,6 +32,11 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
+    setPosition: (state, action) => {
+      const auth = getLocalStorage("auth");
+      setLocalStorage("auth", { ...auth, position: action.payload });
+      state.position = action.payload;
+    },
     setLogout: () => {
       clearLocalStorage("auth");
       return initialAuth;
@@ -32,6 +44,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setLogin, setLogout } = authSlice.actions;
+export const { setLogin, setPosition, setLogout } = authSlice.actions;
 
 export default authSlice.reducer;
