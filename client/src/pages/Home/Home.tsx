@@ -1,4 +1,14 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "../../components/Slider/Slider";
+import Spinner from "../../components/Spinner/Spinner";
+import { AppStore } from "../../app/store";
+import Experiences from "../../components/Experiences/Experiences";
+import {
+  useGetExperiences,
+  useGetExperiencesByTitle,
+} from "../../hooks/useExperiences";
+import { Experiences as ExperiencesModel } from "../../models/Experiences";
 import { IoMdSearch } from "react-icons/io";
 import { RiMapPin2Line } from "react-icons/ri";
 import LinkCard from "./components/Card/Card";
@@ -8,14 +18,7 @@ import education from "../../assets/icons/education.svg";
 import family from "../../assets/icons/family.svg";
 import food from "../../assets/icons/food.svg";
 import tourism from "../../assets/icons/tourism.svg";
-import Experiences from "../../components/Experiences/Experiences";
-import {
-  useGetExperiences,
-  useGetExperiencesByTitle,
-} from "../../hooks/useExperiences";
-import { useState } from "react";
-import { Experiences as ExperiencesModel } from "../../models/Experiences";
-import Spinner from "../../components/Spinner/Spinner";
+import { setPosition } from "../../app/state/authSlice";
 
 const categories = [
   {
@@ -45,6 +48,12 @@ const categories = [
 ];
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const [error, setError] = useState<string | null>(null);
+
+  const token = useSelector((store: AppStore) => store.auth.token);
+
   const onSuccess = (data: ExperiencesModel) => {
     setExperiences(data);
   };
@@ -73,6 +82,32 @@ const Home = () => {
     refetch();
   };
 
+  useEffect(() => {
+    if (token)
+      if (window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition(
+          (position) => {
+            dispatch(
+              setPosition({
+                coords: {
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude,
+                },
+              })
+            );
+          },
+          (error) => {
+            setError(error.message);
+          },
+          {
+            enableHighAccuracy: true,
+          }
+        );
+      } else {
+        setError("Geolocation is not supported by this browser.");
+      }
+  }, []);
+
   return (
     <div className="w-full flex flex-col justify-between pb-6">
       <div className="w-full max-w-6xl flex flex-col md:mx-auto gap-3">
@@ -81,10 +116,7 @@ const Home = () => {
             <h2 className="text-center lg:w-3/5 lg:text-start font-bold text-2xl lg:text-5xl px-16 lg:p-0">
               Disfrutar de una Experiencia ahora está a tu alcance
             </h2>
-            <form
-              onSubmit={onSearch}
-              className="w-full lg:w-2/5 self-start"
-            >
+            <form onSubmit={onSearch} className="w-full lg:w-2/5 self-start">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-1 hover:cursor-pointer">
                   <i className="h-full flex items-center justify-center px-1 hover:cursor-pointer">
@@ -123,7 +155,15 @@ const Home = () => {
                 ))
               : null}
           </div>
-          {isLoading || isFetching ? <Spinner /> : <Experiences isLoading={isLoading} isFetching={isFetching} experiencesData={experiences} />}
+          {isLoading || isFetching ? (
+            <Spinner />
+          ) : (
+            <Experiences
+              isLoading={isLoading}
+              isFetching={isFetching}
+              experiencesData={experiences}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -1,19 +1,22 @@
 import { useRef } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AppStore } from "../../app/store";
+import Reviews from "../../components/Reviews/Reviews";
+import Description from "../../components/ExperienceDescription/ExperienceDescription";
+import LocationMap from "../../components/LocationMap/LocationMap";
+import { useGetExperiencesById } from "../../hooks/useExperiences";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
-import Reviews from "../../components/Reviews/Reviews";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useParams } from "react-router-dom";
-import { useGetExperiencesById } from "../../hooks/useExperiences";
-import Description from "../../components/ExperienceDescription/ExperienceDescription";
 
 const ExperienceDetail = () => {
+  const position = useSelector((store: AppStore) => store.auth.position);
+
   const ref = useRef<SwiperRef>(null);
-
   const { id } = useParams();
-
   const { data: experiences, isSuccess } = useGetExperiencesById(id!);
 
   return (
@@ -39,9 +42,7 @@ const ExperienceDetail = () => {
           {isSuccess ? (
             experiences.images?.map((image, index) => {
               return (
-                <SwiperSlide
-                  key={image.id}
-                >
+                <SwiperSlide key={image.id}>
                   <img
                     className="w-full h-full sm:rounded-lg sm:object-cover object-center mx-auto"
                     src={image.url}
@@ -74,8 +75,13 @@ const ExperienceDetail = () => {
           images={experiences?.images!}
         />
       </div>
-      <div className="w-full h-full min-h-[300px] p-3 md:p-0 md:col-start-4 md:col-end-8 md:row-start-2 md:self-start">
-        <div className="w-full h-full min-h-full bg-green-300 sm:rounded-lg">MAPA</div>
+      <div className="w-full h-full min-h-[300px] p-3 md:p-0 md:col-start-4 md:col-end-8 md:row-start-2 md:self-start sm:rounded-xl">
+          <LocationMap
+            latitude={experiences?.latitude ? experiences.latitude : 0}
+            longitude={experiences?.longitude ? experiences.longitude : 0}
+            title={experiences?.title!}
+            yourLocation={position}
+          />
       </div>
       <div className="min-h-full overflow-y-scroll md:hidden p-3">
         <Reviews />
