@@ -6,19 +6,21 @@ import com.tripMate.demo.exception.ResourceNotFoundException;
 import com.tripMate.demo.mapper.ExperienceMapper;
 import com.tripMate.demo.repository.ExperienceRepository;
 import com.tripMate.demo.service.ExperienceService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ExperienceServiceImpl implements ExperienceService {
 
     @Autowired
     private ExperienceRepository experienceRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private ExperienceMapper experienceMapper;
@@ -37,7 +39,6 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public ExperienceDTO post(Experience experience) {
-
         Experience savedExperience = experienceRepository.save(experience);
         return experienceMapper.toExperienceDTO(savedExperience);
     }

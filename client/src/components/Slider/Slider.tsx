@@ -21,7 +21,7 @@ const Slider = () => {
   >
     {HomeBannerImg.map((image) => (
         <SwiperSlide key={image.alt} className="h-full">
-            <img src={image.image} alt={image.alt} className="w-full h-full md:max-h-[600px] object-cover md:object-cover"/>
+            <img src={image.image} alt={image.alt} className="w-full h-full md:max-h-[25rem] object-cover md:object-cover md:object-top"/>
             <div className="bg-black opacity-20 absolute top-0 left-0 w-full h-full z-[2]"></div>
         </SwiperSlide>
 

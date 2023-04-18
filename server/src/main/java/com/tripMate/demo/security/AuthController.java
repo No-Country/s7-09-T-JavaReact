@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins="**")
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
@@ -32,15 +33,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationRespone> login(@RequestBody AuthenticationRequest request) throws ResourceNotFoundException {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) throws ResourceNotFoundException {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         String jwt = createToken(authentication);
-        return ResponseEntity.ok(new AuthenticationRespone(jwt, userService.getUserByEmail(request.getEmail())));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, userService.getUserByEmail(request.getEmail())));
     }
 
     @GetMapping("/test")
     public String test() {
-    	return "test";
+        return "test";
     }
 
     private String createToken(Authentication authentication) {

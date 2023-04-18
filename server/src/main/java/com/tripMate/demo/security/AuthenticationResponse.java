@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class AuthenticationRespone {
+public class AuthenticationResponse {
     private String jwt;
     private UserDTO user;
 }

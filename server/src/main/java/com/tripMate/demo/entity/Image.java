@@ -28,4 +28,9 @@ public class Image {
     @Column(name = "ALT", length = 1000)
     private String alt;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "EXPERIENCE_ID", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @NonNull
+    private Experience experience;
 }
