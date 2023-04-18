@@ -1,8 +1,8 @@
 package com.tripMate.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -72,8 +72,15 @@ public class Experience {
     @Column(name = "ADDRESS", length = 350)
     private String address;
 
-    @Column(name = "AVERAGE_SCORE")
-    private float averageScore;
+//    @Column(name = "AVERAGE_SCORE")
+//    private float averageScore;
+
+    @Column(name = "TOTAL_SCORE")
+    @ColumnDefault("0")
+    private int totalScore;
+    @Column(name = "TOTAL_REVIEWS")
+    @ColumnDefault("0")
+    private int totalReviews;
 
     @Column(name = "LATITUDE")
     private float latitude;

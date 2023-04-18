@@ -60,7 +60,7 @@ public class ReviewServiceImpl implements ReviewService {
             throw new BadRequestException("Score must be between 0 and 5");
         }
 
-        Experience exp = getExperience(experiencieId);
+        Experience experience = getExperience(experiencieId);
         User user = getUser(email);
         if(getReviewByExperienceAndEmail(experiencieId, email) != null) throw new ResourceAlreadyExistsException("You have already reviewed this experience");
 
@@ -68,11 +68,13 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = Review.builder()
                 .review(reviewDto.getReview())
                 .score(reviewDto.getScore())
-                .experience(exp)
+                .experience(experience)
                 .user(user)
                 .date(LocalDate.now())
                 .build();
-
+        experience.setTotalReviews(experience.getTotalReviews() + 1);
+        experience.setTotalScore(experience.getTotalScore() + review.getScore());
+        experienceRepository.save(experience);
         return reviewMapper.toReviewDto(reviewRepository.save(review));
     }
 
@@ -85,10 +87,15 @@ public class ReviewServiceImpl implements ReviewService {
 
         Review updateReview = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
         if (updateReview == null) throw new ResourceNotFoundException("Review not found");
+        int previousScore = updateReview.getScore();
 
         updateReview.setReview(review.getReview());
         updateReview.setScore(review.getScore());
         updateReview.setDate(LocalDate.now());
+
+        Experience experience = updateReview.getExperience();
+        experience.setTotalScore(experience.getTotalScore() - previousScore + review.getScore());
+        experienceRepository.save(experience);
         return reviewMapper.toReviewDto(reviewRepository.save(updateReview));
 
     }
@@ -97,6 +104,10 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReview(int experienceId, String email) throws ResourceNotFoundException {
         Review review = reviewRepository.findByExperienceIdAndUserEmail(experienceId, email);
         if (review == null) throw new ResourceNotFoundException("Review not found");
+        Experience experience = review.getExperience();
+        experience.setTotalReviews(experience.getTotalReviews() - 1);
+        experience.setTotalScore(experience.getTotalScore() - review.getScore());
+        experienceRepository.save(experience);
         reviewRepository.delete(review);
     }
 

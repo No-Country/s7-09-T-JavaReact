@@ -61,7 +61,8 @@ class ReviewServiceImplTest {
         userList.add(new User(3, "Maria", "Gomez", "maria@email.com", "123456", RoleEnum.USER));
 
         Category category = new Category(1, "Cultural", "icon-cultural", new HashSet<>());
-        Experience experience1 = new Experience(1, "Museo de Arte", "Museo de arte de la ciudad", "",null, category, new City(1, "", "", ""), reviewList,"", 4f, 1f, 1f);
+        Experience experience1 = new Experience(
+                1, "Museo de Arte", "Museo de arte de la ciudad", "",null, category, new City(1, "", "", ""), reviewList,"", 4, 1, 4f, 4f);
         experienceList.add(experience1);
 
         reviewList.add(new Review(1, 4, "Muy bueno", LocalDate.of(2000, 6, 9), userList.get(0), experience1));
@@ -300,7 +301,7 @@ class ReviewServiceImplTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenScoreIsHigherThan5InUpdateReview() throws ResourceNotFoundException {
+    void shouldThrowExceptionWhenScoreIsHigherThan5InUpdateReview() {
         //given
         Experience experience = experienceList.get(0);
         User user = userList.get(0);

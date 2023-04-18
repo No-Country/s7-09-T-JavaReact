@@ -55,7 +55,6 @@ class ReviewMapperTest {
                 .city(city)
                 .category(category)
                 .longitude(40f)
-                .averageScore(2.00f)
                 .build();
         reviews.add(
                 new Review(1, 5,"asdopñfgopsdg", LocalDate.of(2000,9,6), user, experience));
