@@ -33,7 +33,7 @@ const ScoreStar: FC<Iprops> = ({ scoreStar, type, setScore }) => {
           })}
         </div>
       )}
-      <p className="flex">{scoreStar.toFixed(1)}</p>
+      <p className="flex">{scoreStar?.toFixed(1)}</p>
       {type === "simple" && (
         <AiFillStar className="star__icon" color="#FF5C00" size={20} />
       )}

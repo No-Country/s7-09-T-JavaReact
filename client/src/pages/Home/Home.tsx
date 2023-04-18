@@ -1,4 +1,3 @@
-import Card from "../../components/Card/Card";
 import Slider from "../../components/Slider/Slider";
 import { IoMdSearch } from "react-icons/io";
 import { RiMapPin2Line } from "react-icons/ri";
@@ -9,7 +8,7 @@ import education from "../../assets/icons/education.svg";
 import family from "../../assets/icons/family.svg";
 import food from "../../assets/icons/food.svg";
 import tourism from "../../assets/icons/tourism.svg";
-import { Link } from "react-router-dom";
+import Experiences from "../../components/Experiences/Experiences";
 
 const categories = [
   {
@@ -38,19 +37,8 @@ const categories = [
   },
 ];
 
-const cards = [
-  "card1",
-  "card2",
-  "card3",
-  "card4",
-  "card5",
-  "card6",
-  "card7",
-  "card8",
-  "card9",
-];
-
 const Home = () => {
+
   return (
     <div className="w-full flex flex-col justify-between pb-6">
       <div className="w-full max-w-6xl flex flex-col md:mx-auto gap-3">
@@ -96,15 +84,7 @@ const Home = () => {
                 ))
               : null}
           </div>
-          <div className="w-full flex flex-col md:flex-wrap md:flex-row gap-6 items-center justify-center lg:justify-evenly xl:justify-between">
-            {cards
-              ? cards.map((card) => (
-                  <Link key={card} to={`/experience/${card}`}>
-                    <Card />
-                  </Link>
-                ))
-              : null}
-          </div>
+          <Experiences />
         </div>
       </div>
     </div>
