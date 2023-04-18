@@ -35,9 +35,9 @@ const AppRouter = () => {
           <Route
             path={PrivateRoutes.PROFILE}
             element={
-              // <RequireAuth>
-              <Profile />
-              // </RequireAuth>
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
             }
           />
           <Route path="*" element={<NotFound />} />

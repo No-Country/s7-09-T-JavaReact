@@ -7,15 +7,15 @@ import Reviews from "../../components/Reviews/Reviews";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-const listImage: Array<string> = [
-  "https://www.clarin.com/img/2015/03/21/H1GaoLq6Xl_1256x620.jpg",
-  "https://www.veroniatours.com/imagenes/jardingeneralife.jpg",
-  "https://previews.123rf.com/images/bloodua/bloodua1701/bloodua170103247/72051455-jardines-y-fuentes-en-el-palacio-de-la-alhambra-en-granada-en-un-hermoso-d%C3%ADa-de-verano-espa%C3%B1a.jpg",
-];
+import { useParams } from "react-router-dom";
+import { useGetExperiencesById } from "../../hooks/useExperiences";
 
 const ExperienceDetail = () => {
   const ref = useRef<SwiperRef>(null);
+
+  const {id} = useParams()
+
+  const {data: experiences, isSuccess} = useGetExperiencesById(id!)
 
   return (
     <div className="flex flex-col w-full sm:flex-row-reverse sm:justify-center sm:gap-10 sm:pt-10 sm:pb-10">
@@ -36,17 +36,17 @@ const ExperienceDetail = () => {
             <div className="swiper-button-prev text-white"></div>
             <div className="swiper-button-next text-white"></div>
           </div>
-          {listImage.length > 0 ? (
-            listImage?.map((image, index) => {
+          {isSuccess ? (
+            experiences.images?.map((image, index) => {
               return (
                 <SwiperSlide
-                  key={`prod-${index}`}
+                  key={image.id}
                   className="h-[17.625rem] sm:w-full sm:h-[30rem]"
                 >
                   <img
-                    className="h-full sm:rounded-lg sm:object-cover"
-                    src={image}
-                    alt={`experience-${index}`}
+                    className="h-full sm:rounded-lg sm:object-cover object-cover object-center mx-auto"
+                    src={image.url}
+                    alt={image.alt}
                   />
                 </SwiperSlide>
               );
@@ -69,27 +69,22 @@ const ExperienceDetail = () => {
         <div className=" flex gap-4 justify-start items-start">
           <Avatar size="xs" image_url={null} />
           <h2 className="font-bold text-lg leading-5">
-            <p>Biaka Biodescanso</p>
-            <p>Cali, Colombia</p>
+            <p>{experiences?.title}</p>
+            <p>{experiences?.city?.city}, {experiences?.city?.country}</p>
           </h2>
         </div>
         <p className="text-[0.9375rem] mt-2">
-          Glamping en el bosque de los farallones de Cali
+          {experiences?.subtitle}
         </p>
         <div className="flex justify-between">
-          <ScoreStar scoreStar={3.4} type="simple" />
+          <ScoreStar scoreStar={experiences?.averageScore!} type="simple" />
           <p className="text-[1.2rem]">$500.000</p>
         </div>
         <div className="flex w-full items-center my-4">
           <div className="flex h-0.5 w-full bg-gray-300"></div>
         </div>
         <p className="text-[15px] leading-5 my-4">
-          Lorem ipsum dolor sit amet consectetur. Semper odio at sed tempor nec
-          massa feugiat. In egestas nisl iaculis pulvinar facilisi ante in duis.
-          Lobortis vivamus ultricies diam platea aliquam imperdiet. Mollis
-          tellus rhoncus mauris sed facilisis lorem urna. Felis lobortis nunc
-          sit aliquam egestas condimentum pellentesque sed. Sit dictum venenatis
-          porta nulla habitant viverra tempor.
+          {experiences?.description}
         </p>
         <div className="flex w-full items-center my-4">
           <div className="flex h-0.5 w-full bg-gray-300"></div>
