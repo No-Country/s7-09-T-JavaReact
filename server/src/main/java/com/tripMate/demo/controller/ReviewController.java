@@ -52,10 +52,10 @@ public class ReviewController {
     }
 
     @DeleteMapping("/experiences/{experienceId}/reviews")
-    ResponseEntity<?> deleteUserReview(@PathVariable int experienceId) throws ResourceNotFoundException {
+    ResponseEntity<String> deleteUserReview(@PathVariable int experienceId) throws ResourceNotFoundException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         reviewService.deleteReview(experienceId, email);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Review deleted successfully", HttpStatus.OK);
     }
 
 
