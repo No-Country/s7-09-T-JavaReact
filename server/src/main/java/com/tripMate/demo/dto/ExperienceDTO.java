@@ -7,6 +7,7 @@ import com.tripMate.demo.entity.Category;
 import com.tripMate.demo.entity.City;
 import com.tripMate.demo.entity.Image;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,9 +27,12 @@ public class ExperienceDTO {
     private String description;
     private Set<ImageDTO> images = new HashSet<>();
     private CategoryDTO category;
+    private ContactDTO contact;
     private CityDTO city;
     private String address;
     private float averageScore;
     private float latitude;
     private float longitude;
+    private double price;
+
 }

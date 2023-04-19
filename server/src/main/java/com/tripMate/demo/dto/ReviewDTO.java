@@ -16,4 +16,5 @@ public class ReviewDTO {
     private LocalDate date;
     private Profile profile;
     private int experienceId;
+    private float experienceAverageScore;
 }

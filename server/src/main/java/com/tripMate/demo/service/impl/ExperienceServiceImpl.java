@@ -26,16 +26,17 @@ public class ExperienceServiceImpl implements ExperienceService {
     private ExperienceMapper experienceMapper;
 
     @Override
-    public List<ExperienceDTO> getAll()
-    {
+    public List<ExperienceDTO> getAll() {
         return experienceMapper.toExperiencesDTO(experienceRepository.findAll());
     }
+
     @Override
     public ExperienceDTO getById(int id) throws ResourceNotFoundException {
         Experience experience = experienceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("experience with id "+id+ " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("experience with id " + id + " not found"));
         return experienceMapper.toExperienceDTO(experience);
     }
+
     @Override
     public ExperienceDTO post(Experience experience) {
         Experience savedExperience = experienceRepository.save(experience);
@@ -55,13 +56,17 @@ public class ExperienceServiceImpl implements ExperienceService {
         existingExperience.setDescription(experience.getDescription());
         existingExperience.setLatitude(experience.getLatitude());
         existingExperience.setLongitude(experience.getLongitude());
+        existingExperience.setPrice(experience.getPrice());
         existingExperience.setAddress(experience.getAddress());
         existingExperience.setImages(experience.getImages());
-        if(experience.getCity() != null){
-        existingExperience.setCity(experience.getCity());
+        if (experience.getCity() != null) {
+            existingExperience.setCity(experience.getCity());
         }
-        if(experience.getCategory() != null) {
+        if (experience.getCategory() != null) {
             existingExperience.setCategory(experience.getCategory());
+        }
+        if (experience.getContact() != null) {
+            existingExperience.setContact(experience.getContact());
         }
         Experience updatedExperience = experienceRepository.save(existingExperience);
         return experienceMapper.toExperienceDTO(updatedExperience);
@@ -90,4 +95,18 @@ public class ExperienceServiceImpl implements ExperienceService {
         return experienceMapper.toExperiencesDTO(experienceRepository.findByTitleContaining(title));
     }
 
+    @Override
+    public List<ExperienceDTO> findByLatitudeLongitudeAndDistance(float latitude, float longitude, float distance) {
+        return experienceMapper.toExperiencesDTO(experienceRepository.findByLatitudeLongitudeAndDistance(latitude, longitude, distance));
+    }
+
+    @Override
+    public List<ExperienceDTO> findByLatitudeLongitudeDistanceAndCategory(float latitude, float longitude, float distance, int categoryId) {
+        return experienceMapper.toExperiencesDTO(experienceRepository.findByLatitudeLongitudeDistanceAndCategory(latitude, longitude, distance, categoryId));
+    }
+
+    @Override
+    public List<ExperienceDTO> findByCategoryIdAndCityId(int categoryId, int cityId) {
+        return experienceMapper.toExperiencesDTO(experienceRepository.findByCategoryIdAndCityId(categoryId, cityId));
+    }
 }
