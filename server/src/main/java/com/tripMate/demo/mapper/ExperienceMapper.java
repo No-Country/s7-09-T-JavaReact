@@ -12,7 +12,7 @@ public interface ExperienceMapper {
 
     ExperienceMapper INSTANCE = Mappers.getMapper(ExperienceMapper.class);
     @Mapping(target = "averageScore", expression = "java(" +
-            "experience.getTotalReviews() > 0 ? experience.getTotalScore()/experience.getTotalReviews(): 0)")
+            "experience.getTotalReviews() > 0 ? (float) experience.getTotalScore()/experience.getTotalReviews(): 0)")
     ExperienceDTO toExperienceDTO(Experience experience);
 
     @Mapping(target = "totalScore", ignore = true)
