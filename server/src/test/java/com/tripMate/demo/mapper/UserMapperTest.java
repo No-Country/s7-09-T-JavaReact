@@ -1,5 +1,6 @@
 package com.tripMate.demo.mapper;
 
+import com.tripMate.demo.dto.Profile;
 import com.tripMate.demo.dto.UserCreateDTO;
 import com.tripMate.demo.dto.UserDTO;
 import com.tripMate.demo.entity.User;
@@ -93,6 +94,30 @@ class UserMapperTest {
             assertEquals(userDTO.getName(), user.getName());
             assertEquals(userDTO.getLastname(), user.getLastname());
             assertEquals(userDTO.getRole(), user.getRole());
+        });
+    }
+
+    @Test
+    void userToProfile() {
+        users.forEach(user -> {
+            Profile profile = mapper.toProfile(user);
+            assertEquals(user.getId(), profile.getId());
+            assertEquals(user.getName(), profile.getName());
+            assertEquals(user.getLastname(), profile.getLastname());
+        });
+    }
+
+    @Test
+    void profileToUser() {
+        users.forEach(users -> {
+            Profile profile = Profile.builder().id(users.getId()).name(users.getName()).lastname(users.getLastname()).build();
+            User user = mapper.toUser(profile);
+            assertEquals(profile.getId(), user.getId());
+            assertEquals(profile.getName(), user.getName());
+            assertEquals(profile.getLastname(), user.getLastname());
+            assertNull(user.getEmail());
+            assertNull(user.getPassword());
+            assertNull(user.getRole());
         });
     }
 

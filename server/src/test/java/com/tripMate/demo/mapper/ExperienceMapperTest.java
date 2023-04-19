@@ -45,11 +45,12 @@ public class ExperienceMapperTest {
                 .title("title1")
                 .subtitle("subtitle")
                 .description("description1")
-                .latitude(50L)
+                .latitude(50f)
+                .totalScore(20)
+                .totalReviews(4)
                 .city(city)
                 .category(category)
-                .longitude(40L)
-                .averageScore(2L)
+                .longitude(40f)
                 .images(images).build();
 
         images.add(Image.builder().id(1).url ("http://example.com/image.jpg").alt("image 1").experience(experience).build());
@@ -63,15 +64,57 @@ public class ExperienceMapperTest {
         assertEquals(experience.getTitle(), experienceDTO.getTitle());
         assertEquals(experience.getSubtitle(), experienceDTO.getSubtitle());
         assertEquals(experience.getDescription(), experienceDTO.getDescription());
-        assertEquals(experience.getAverageScore(), experienceDTO.getAverageScore());
         assertEquals(experience.getLongitude(), experienceDTO.getLongitude());
         assertEquals(experience.getLatitude(), experienceDTO.getLatitude());
         assertEquals(experience.getImages().size(), experienceDTO.getImages().size());
+        assertEquals(experience.getCategory().getId(), experienceDTO.getCategory().getId());
+        assertEquals(experience.getCategory().getTitle(), experienceDTO.getCategory().getTitle());
+        assertEquals(experience.getCategory().getIcon(), experienceDTO.getCategory().getIcon());
+        assertEquals(experience.getCategory().getTags().size(), experienceDTO.getCategory().getTags().size());
+        assertEquals(experience.getCity().getId(), experienceDTO.getCity().getId());
+        assertEquals(experience.getCity().getCity(), experienceDTO.getCity().getCity());
+        assertEquals(experience.getCity().getProvince(), experienceDTO.getCity().getProvince());
+        assertEquals(experience.getCity().getCountry(), experienceDTO.getCity().getCountry());
+        assertEquals(5, experienceDTO.getAverageScore());
 
         experience.getImages().forEach(img -> {
             assertTrue(experienceDTO.getImages().stream().anyMatch(imgDTO -> imgDTO.getId() == img.getId()));
         });
 
+    }
+
+    @Test
+    void shouldMapWhenTotalReviewsIs0() {
+        //given
+        City city = City.builder().id(1).city("Rosario").province("Santa Fe").country("Argentina").build();
+
+        CityDTO cityDTO = cityMapper.toCityDTO(city);
+
+        Set<Tag> tags = new HashSet<>();
+        tags.add(Tag.builder().id(1).title("tag1").icon("icon1").build());
+        tags.add(Tag.builder().id(2).title("tag2").icon("icon2").build());
+        Category category = Category.builder().id(1).title("name").icon("icon3").tags(tags).build();
+
+        Set<Image> images = new HashSet<>();
+
+        Experience experience = Experience.builder().id(1)
+                .title("title1")
+                .subtitle("subtitle")
+                .description("description1")
+                .latitude(50f)
+                .totalScore(0)
+                .totalReviews(0)
+                .city(city)
+                .category(category)
+                .longitude(40f)
+                .images(images).build();
+
+        images.add(Image.builder().id(1).url ("http://example.com/image.jpg").alt("image 1").experience(experience).build());
+        images.add(Image.builder().id(2).url ("http://example.com/image2.jpg").alt("image 2").experience(experience).build());
+        //when
+        ExperienceDTO experienceDTO = mapper.toExperienceDTO(experience);
+        //then
+        assertEquals(0, experienceDTO.getAverageScore());
     }
 
     @Test
@@ -109,11 +152,22 @@ public class ExperienceMapperTest {
         assertEquals(experienceDTO.getTitle(), experience.getTitle());
         assertEquals(experienceDTO.getSubtitle(), experience.getSubtitle());
         assertEquals(experienceDTO.getDescription(), experience.getDescription());
-        assertEquals(experienceDTO.getAverageScore(), experience.getAverageScore());
         assertEquals(experienceDTO.getLongitude(), experience.getLongitude());
         assertEquals(experienceDTO.getLatitude(), experience.getLatitude());
         assertEquals(experienceDTO.getImages().size(), experience.getImages().size());
+        assertEquals(experienceDTO.getCategory().getId(), experience.getCategory().getId());
+        assertEquals(experienceDTO.getCategory().getTitle(), experience.getCategory().getTitle());
+        assertEquals(experienceDTO.getCategory().getIcon(), experience.getCategory().getIcon());
+        assertEquals(experienceDTO.getCategory().getTags().size(), experience.getCategory().getTags().size());
+        assertEquals(experienceDTO.getCity().getId(), experience.getCity().getId());
+        assertEquals(experienceDTO.getCity().getCity(), experience.getCity().getCity());
+        assertEquals(experienceDTO.getCity().getProvince(), experience.getCity().getProvince());
+        assertEquals(experienceDTO.getCity().getCountry(), experience.getCity().getCountry());
+        assertEquals(0, experience.getTotalScore());
+        assertEquals(0, experience.getTotalScore());
     }
+
+
 
 //    @Test
 //    void toExperience() {
