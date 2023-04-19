@@ -59,7 +59,7 @@ class ReviewMapperTest {
         reviews.add(
                 new Review(1, 5,"asdopñfgopsdg", LocalDate.of(2000,9,6), user, experience));
         reviewDTOS.add(
-                new ReviewDTO(1, 5,"asdopñfgopsdg", LocalDate.of(2000,9,6), profile, experience.getId()));
+                new ReviewDTO(1, 5,"asdopñfgopsdg", LocalDate.of(2000,9,6), profile, experience.getId(), 5f));
 
     }
 
