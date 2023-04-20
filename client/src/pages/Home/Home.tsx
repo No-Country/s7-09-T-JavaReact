@@ -5,6 +5,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import { AppStore } from "../../app/store";
 import Experiences from "../../components/Experiences/Experiences";
 import {
+  useGetExperienceCategoryData,
   useGetExperiences,
   useGetExperiencesByLocation,
   useGetExperiencesByTitle,
@@ -93,6 +94,13 @@ const Home = () => {
 
   const { refetch: refetchLocation, isFetching: isFetchingLocation, isLoading: isLoadingLocation } = useGetExperiencesByLocation(latitude, longitude, onSuccessLocation, onErrorLocation);
   const { refetch: refetchSearch } = useGetExperiencesByTitle(title, onSuccessSearch, onErrorSearch);
+  const categoryData = useGetExperienceCategoryData('experiencesByCategory')
+  
+  const onClickCategory = () => {
+    setExperiences(categoryData)
+    console.log(experiences)
+  }
+
 
   const onSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -168,12 +176,13 @@ const Home = () => {
           <div className="flex w-full gap-x-3 lg:gap-x-6 items-center lg:justify-center md:mx-auto pl-6 md:px-3 xl:px-0 pb-3 overflow-x-scroll md:overflow-x-hidden font-medium">
             {categories
               ? categories.map((category) => (
+                <div key={category.name} onClick={onClickCategory}>
                   <LinkCard
-                    key={category.name}
                     name={category.name}
-                    param={category.name}
+                    categoryId={category.id}
                     icon={category.icon}
-                  />
+                    />
+                  </div>
                 ))
               : null}
           </div>
