@@ -38,7 +38,7 @@ export const useLogin = () => {
 
       Success(
         `¡Hola ${auth.user.name}!`,
-        "¡Qué bueno tenerte de nuevo en Tripmate!"
+        "¡Qué bueno tenerte en Tripmate!"
       );
 
       navigate(`/${PublicRoutes.HOME}`, { replace: true });

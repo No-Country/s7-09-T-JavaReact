@@ -43,14 +43,6 @@ function LocationMap({ latitude, longitude, title, yourLocation }: Props) {
         maxZoom: 17,
       }).addTo(mapi.current);
 
-      // Add the marker
-      const marker = L.marker([latitude, longitude], {
-        icon: locateExperienceIcon,
-      }).addTo(mapi.current);
-
-      // Add a popup to the marker
-      marker.bindPopup(title).openPopup();
-
       if (yourLocation?.coords.latitude) {
         L.circle(
           [yourLocation.coords.latitude, yourLocation.coords.longitude],
@@ -70,6 +62,14 @@ function LocationMap({ latitude, longitude, title, yourLocation }: Props) {
         ).addTo(mapi.current);
         marker.bindPopup("Estas aqui").openPopup();
       }
+
+      // Add the marker
+      const marker = L.marker([latitude, longitude], {
+        icon: locateExperienceIcon,
+      }).addTo(mapi.current);
+
+      // Add a popup to the marker
+      marker.bindPopup(title).openPopup();
     }
 
     return () => {
