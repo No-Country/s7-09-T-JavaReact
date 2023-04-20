@@ -38,7 +38,7 @@
 
 <br/>
 
-# Guia de para encontrar experiencias en dónde estes
+# Guia para encontrar experiencias en dónde estes
 
 
 ## Enlace a la aplicación
