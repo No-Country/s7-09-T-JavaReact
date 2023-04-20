@@ -35,7 +35,7 @@ function LocationMap({ latitude, longitude, title, yourLocation }: Props) {
   useEffect(() => {
     if (mapRef.current) {
       // Create the map instance
-      mapi.current = L.map(mapRef.current).setView([latitude, longitude], 14);
+      mapi.current = L.map(mapRef.current).setView([latitude, longitude], 12);
 
       // Add the tile layer
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -50,7 +50,7 @@ function LocationMap({ latitude, longitude, title, yourLocation }: Props) {
             color: "red",
             fillColor: "#f63b553d",
             fillOpacity: 0.2,
-            radius: 1500,
+            radius: 4000,
           }
         ).addTo(mapi.current);
 

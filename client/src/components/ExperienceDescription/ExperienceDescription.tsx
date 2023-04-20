@@ -26,7 +26,7 @@ const Description = ({
       <p className="text-[0.9375rem] mt-2">{subtitle}</p>
       <div className="flex justify-between">
         <ScoreStar scoreStar={averageScore!} type="simple" />
-        <p className="text-[1.2rem]">${price}</p>
+        <p className="text-[1.2rem]">{price ? `$${price}` : "Gratis"}</p>
       </div>
       <div className="flex w-full items-center my-4">
         <div className="flex h-0.5 w-full bg-gray-300"></div>
