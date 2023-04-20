@@ -6,6 +6,7 @@ import { AppStore } from "../../app/store";
 import Experiences from "../../components/Experiences/Experiences";
 import {
   useGetExperiences,
+  useGetExperiencesByLocation,
   useGetExperiencesByTitle,
 } from "../../hooks/useExperiences";
 import { Experiences as ExperiencesModel } from "../../models/Experiences";
@@ -24,35 +25,42 @@ const categories = [
   {
     name: "Restaurantes",
     icon: food,
+    id: 1
   },
   {
     name: "Entretenimiento",
     icon: entertainment,
+    id: 2
   },
   {
     name: "Aventura",
     icon: adventure,
+    id: 6
   },
   {
     name: "Educación",
     icon: education,
+    id: 4
   },
   {
     name: "Turismo",
     icon: tourism,
+    id: 5
   },
   {
     name: "Familiares",
     icon: family,
+    id: 3
   },
 ];
 
 const Home = () => {
   const dispatch = useDispatch();
+  const token = useSelector((store: AppStore) => store.auth.token);
+  const {latitude, longitude} =useSelector((store: AppStore) => store.auth.position.coords)
 
   const [error, setError] = useState<string | null>(null);
 
-  const token = useSelector((store: AppStore) => store.auth.token);
 
   const onSuccess = (data: ExperiencesModel) => {
     setExperiences(data);
@@ -60,26 +68,35 @@ const Home = () => {
   const [experiences, setExperiences] = useState<ExperiencesModel>(
     {} as ExperiencesModel
   );
-  const { isLoading, isFetching } = useGetExperiences(onSuccess);
+  const { isLoading, isFetching, refetch } = useGetExperiences(onSuccess);
   const [title, setTitle] = useState("");
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
 
+  const onSuccessLocation = (locationResult: ExperiencesModel) => {
+    setExperiences(locationResult);
+  };
+
+  const onErrorLocation = (data: ExperiencesModel) => {
+    setExperiences(data);
+  };
+
   const onSuccessSearch = (searchResult: ExperiencesModel) => {
     setExperiences(searchResult);
   };
 
-  const onError = (data: ExperiencesModel) => {
+  const onErrorSearch = (data: ExperiencesModel) => {
     setExperiences(data);
   };
 
-  const { refetch } = useGetExperiencesByTitle(title, onSuccessSearch, onError);
+  const { refetch: refetchLocation, isFetching: isFetchingLocation, isLoading: isLoadingLocation } = useGetExperiencesByLocation(latitude, longitude, onSuccessLocation, onErrorLocation);
+  const { refetch: refetchSearch } = useGetExperiencesByTitle(title, onSuccessSearch, onErrorSearch);
 
   const onSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    refetch();
+    refetchSearch();
   };
 
   useEffect(() => {
@@ -107,6 +124,11 @@ const Home = () => {
         setError("Geolocation is not supported by this browser.");
       }
   }, []);
+
+  useEffect(() => {
+    if (token && latitude !== 0) refetchLocation()
+    if (!token) refetch()
+  }, [token]);
 
   return (
     <div className="w-full flex flex-col justify-between pb-6">
@@ -155,7 +177,7 @@ const Home = () => {
                 ))
               : null}
           </div>
-          {isLoading || isFetching ? (
+          {isLoading || isFetching || isFetchingLocation || isLoadingLocation ? (
             <Spinner />
           ) : (
             <Experiences

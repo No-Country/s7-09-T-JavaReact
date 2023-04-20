@@ -6,6 +6,8 @@ import { Experience, Experiences } from "../models/Experiences";
 const getExperiences = () => getRequest("/api/experiences");
 const getExperiencesById = (id: string) => getRequest(`/api/experiences/${id}`);
 const getExperiencesByTitle = (title: string) => getRequest(`/api/experiences/title?title=${title}`);
+const getExperiencesByLocation = (latitude: number, longitude: number) => getRequest(`/api/experiences/find?latitude=${latitude}&longitude=${longitude}&distance=5`);
+const getExperiencesByCategory = (latitude: number, longitude: number, categoryId: number) => getRequest(`/api/experiences/find?latitude=${latitude}&longitude=${longitude}&distance=5categoryId=${categoryId}`);
 
 export const useGetExperiences = (onSuccess: (data: Experiences) => void) => {
     return useQuery(["experiences"], () => getExperiences(), {
@@ -13,7 +15,8 @@ export const useGetExperiences = (onSuccess: (data: Experiences) => void) => {
       onError: (error: any) => {
         throw new Error(error.message);
       },
-      refetchOnWindowFocus: true
+      refetchOnWindowFocus: false,
+      enabled: false
     });
   };
 
@@ -34,5 +37,24 @@ export const useGetExperiencesByTitle = (title: string, onSuccess: (data: Experi
       onError: onError,
       refetchOnWindowFocus: true,
       enabled: false
+    });
+  };
+
+
+export const useGetExperiencesByLocation = (latitude: number, longitude: number, onSuccess: (data: Experiences) => void, onError: (data: Experiences) => void) => {
+    return useQuery(["experiencesByLocation"], () => getExperiencesByLocation(latitude, longitude), {
+      onSuccess: onSuccess,
+      onError: onError,
+      refetchOnWindowFocus: false,
+      enabled: !!latitude || !!longitude
+    });
+  };
+
+  export const useGetExperiencesByCategory = (latitude: number, longitude: number, categoryId: number, onSuccess: (data: Experiences) => void, onError: (data: Experiences) => void) => {
+    return useQuery(["experiencesByCategory"], () => getExperiencesByCategory(latitude, longitude, categoryId), {
+      onSuccess: onSuccess,
+      onError: onError,
+      refetchOnWindowFocus: false,
+      enabled: !!latitude || !!longitude
     });
   };
