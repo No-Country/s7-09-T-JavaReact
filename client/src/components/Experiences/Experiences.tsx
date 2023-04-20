@@ -28,6 +28,7 @@ const Experiences = ({experiencesData, isLoading, isFetching}: Props) => {
                       title={experience.title}
                       subtitle={experience.subtitle}
                       images={experience.images}
+                      price={experience.price}
                     />
                   </Link>
                 ))

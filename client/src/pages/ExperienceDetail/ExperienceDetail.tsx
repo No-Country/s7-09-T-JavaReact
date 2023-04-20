@@ -73,18 +73,20 @@ const ExperienceDetail = () => {
           description={experiences?.description}
           id={experiences?.id!}
           images={experiences?.images!}
+          price={experiences?.price!}
+          address={experiences?.address!}
         />
       </div>
       <div className="w-full h-full min-h-[300px] p-3 md:p-0 md:col-start-4 md:col-end-8 md:row-start-2 md:self-start sm:rounded-xl">
-          <LocationMap
-            latitude={experiences?.latitude ? experiences.latitude : 0}
-            longitude={experiences?.longitude ? experiences.longitude : 0}
-            title={experiences?.title!}
-            yourLocation={position}
-          />
+        <LocationMap
+          latitude={experiences?.latitude ? experiences.latitude : 0}
+          longitude={experiences?.longitude ? experiences.longitude : 0}
+          title={experiences?.title!}
+          yourLocation={position}
+        />
       </div>
       <div className="min-h-full overflow-y-scroll md:hidden p-3">
-        <Reviews />
+        {experiences?.id && <Reviews experienceId={experiences?.id} />}
       </div>
 
       <div className="hidden h-full md:col-start-1 md:col-end-4 md:row-start-1 md:row-end-3 md:self-start md:flex flex-col gap-0.5 p-6 border-solid border bg-white shadow-xl rounded-lg md:overflow-y-auto">
@@ -96,9 +98,11 @@ const ExperienceDetail = () => {
           description={experiences?.description}
           id={experiences?.id!}
           images={experiences?.images!}
+          price={experiences?.price!}
+          address={experiences?.address!}
         />
-        <div className="w-full pr-3 overflow-y-scroll">
-          <Reviews />
+        <div className="w-full pr-3 overflow-y-scroll h-full">
+          {experiences?.id && <Reviews experienceId={experiences?.id} />}
         </div>
       </div>
     </div>

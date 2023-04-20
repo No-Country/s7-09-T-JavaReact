@@ -35,21 +35,13 @@ function LocationMap({ latitude, longitude, title, yourLocation }: Props) {
   useEffect(() => {
     if (mapRef.current) {
       // Create the map instance
-      mapi.current = L.map(mapRef.current).setView([latitude, longitude], 14);
+      mapi.current = L.map(mapRef.current).setView([latitude, longitude], 12);
 
       // Add the tile layer
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "Map data &copy; OpenStreetMap contributors",
         maxZoom: 17,
       }).addTo(mapi.current);
-
-      // Add the marker
-      const marker = L.marker([latitude, longitude], {
-        icon: locateExperienceIcon,
-      }).addTo(mapi.current);
-
-      // Add a popup to the marker
-      marker.bindPopup(title).openPopup();
 
       if (yourLocation?.coords.latitude) {
         L.circle(
@@ -58,7 +50,7 @@ function LocationMap({ latitude, longitude, title, yourLocation }: Props) {
             color: "red",
             fillColor: "#f63b553d",
             fillOpacity: 0.2,
-            radius: 1500,
+            radius: 4000,
           }
         ).addTo(mapi.current);
 
@@ -70,6 +62,14 @@ function LocationMap({ latitude, longitude, title, yourLocation }: Props) {
         ).addTo(mapi.current);
         marker.bindPopup("Estas aqui").openPopup();
       }
+
+      // Add the marker
+      const marker = L.marker([latitude, longitude], {
+        icon: locateExperienceIcon,
+      }).addTo(mapi.current);
+
+      // Add a popup to the marker
+      marker.bindPopup(title).openPopup();
     }
 
     return () => {

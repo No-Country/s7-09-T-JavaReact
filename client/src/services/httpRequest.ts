@@ -1,10 +1,14 @@
 import axios from "axios";
+import { getLocalStorage } from "../utils/LocalStorageFunctions";
 
 const URL: string = import.meta.env.VITE_API_URL;
 
 // @ts-ignore
-const { token } = JSON.parse(localStorage.getItem("auth")) || "";
-const Authorization = token && `Bearer ${token}`;
+const getToken = () => {
+  const { token } = getLocalStorage("auth") || "";
+  const Authorization = token && `Bearer ${token}`;
+  return Authorization;
+};
 
 export const postRequest = async (dataSend: {}, endpoint: string) => {
   try {
@@ -12,7 +16,7 @@ export const postRequest = async (dataSend: {}, endpoint: string) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization,
+        Authorization: getToken(),
       },
     });
 
@@ -32,7 +36,7 @@ export const getRequest = async (endpoint: string) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization,
+        Authorization: getToken(),
       },
     });
 
@@ -49,14 +53,16 @@ export const getRequest = async (endpoint: string) => {
   }
 };
 
-
-export const putRequest = async (endpoint: string,id:string,dataProduct:{}) => {
+export const putRequest = async (
+  endpoint: string,
+  dataSend: {}
+) => {
   try {
-    const { data } = await axios.put(URL + endpoint + id,dataProduct,{
+    const { data } = await axios.put(URL + endpoint, dataSend, {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization,
+        Authorization: getToken(),
       },
     });
 
@@ -73,13 +79,13 @@ export const putRequest = async (endpoint: string,id:string,dataProduct:{}) => {
   }
 };
 
-export const deleteRequest = async (endpoint:string,id:string) => {
+export const deleteRequest = async (endpoint: string) => {
   try {
-    const { data } = await axios.delete(URL + endpoint + id,{
+    const { data } = await axios.delete(URL + endpoint, {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization,
+        Authorization: getToken(),
       },
     });
 
@@ -102,14 +108,14 @@ export const postRequestFile = async (dataSend: {}, endpoint: string) => {
       headers: {
         "Content-Type": "multipart/form-data",
         Accept: "application/json",
-        Authorization,
+        Authorization: getToken(),
       },
     });
 
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log(error?.response?.data.error)
+      console.log(error?.response?.data.error);
       throw new Error(error.message);
     } else {
       return "An unexpected error occurred";
