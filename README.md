@@ -14,7 +14,7 @@
 // Integrantes del equipo de back-end
   Alex Lihuel Mujica,
   Analia Casali,
-  Christian Herrera
+  Christian Herrera,
   Gabriel Mayantz Remes,
   
   
@@ -27,6 +27,9 @@
 
 
 // Integrantes del equipo de testing
+  Alex Lihuel Mujica,
+  Analia Casali,
+  Christian Herrera
   
   
 
@@ -35,7 +38,7 @@
 
 <br/>
 
-# Guia de experiencias
+# Guia de para encontrar experiencias en dónde estes
 
 
 ## Enlace a la aplicación
