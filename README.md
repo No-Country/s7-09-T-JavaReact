@@ -6,20 +6,28 @@
 
 ```java - react
 // Integrantes del equipo de front-end
+  Adrián Centurión,
+  Darío Elguero,
+  Jordi Mantilla
   
 
 // Integrantes del equipo de back-end
+  Alex Lihuel Mujica,
+  Analia Casali,
+  Christian Herrera
   Gabriel Mayantz Remes,
+  
   
 
 // Integrantes del equipo de diseño UI/UX
+  Andrés Cajas,
+  Gerardo Vargas
+  
 
 
 
 // Integrantes del equipo de testing
   
-  
-// Product Manager
   
 
 ```
@@ -32,6 +40,10 @@
 
 ## Enlace a la aplicación
 
-- 
+  https://tripmate-s7-09.netlify.app/
 
 ## Lenguajes, herramientas y métodos 
+  Java / Springboot, Spring security, MySql
+  
+  typescript / React , Tailwind, Redux,
+  React-Query
