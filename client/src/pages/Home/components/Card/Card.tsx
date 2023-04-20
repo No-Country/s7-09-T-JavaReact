@@ -2,25 +2,33 @@ import { useSelector } from "react-redux"
 import { useGetExperiencesByCategory } from "../../../../hooks/useExperiences"
 import { AppStore } from "../../../../app/store"
 import { Experiences } from "../../../../models/Experiences"
+import { Dispatch, SetStateAction } from "react"
 
 type Props = {
     name: string
     icon?: string
     categoryId: number
+    experiences: Experiences;
+    setExperience: Dispatch<SetStateAction<Experiences>>
 }
 
-const LinkCard = ({name, icon, categoryId, }: Props) => {
+const LinkCard = ({name, icon, categoryId, setExperience, experiences }: Props) => {
 
   const onErrorCategory = (data: Experiences) => {
     console.log(data);
   };
   
   const {latitude, longitude} =useSelector((store: AppStore) => store.auth.position.coords)
-  const { refetch: refetchCategory } = useGetExperiencesByCategory(latitude, longitude, categoryId, onErrorCategory);
-
+  const onSuccess = (searchResult: Experiences) => {
+    setExperience(searchResult);
+  };
+  const { data: listExperience, refetch: refetchCategory } = useGetExperiencesByCategory(latitude, longitude, categoryId, onSuccess,onErrorCategory);
   const handleClick = () => {
     refetchCategory()
-    console.log('click en category')
+    // console.log('click en category')
+    // ;
+    // setExperience(listExperience!)
+    
   }
 
 

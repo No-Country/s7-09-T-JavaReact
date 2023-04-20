@@ -26,42 +26,43 @@ const categories = [
   {
     name: "Restaurantes",
     icon: food,
-    id: 1
+    id: 1,
   },
   {
     name: "Entretenimiento",
     icon: entertainment,
-    id: 2
+    id: 2,
   },
   {
     name: "Aventura",
     icon: adventure,
-    id: 6
+    id: 6,
   },
   {
     name: "Educación",
     icon: education,
-    id: 4
+    id: 4,
   },
   {
     name: "Turismo",
     icon: tourism,
-    id: 5
+    id: 5,
   },
   {
     name: "Familiares",
     icon: family,
-    id: 3
+    id: 3,
   },
 ];
 
 const Home = () => {
   const dispatch = useDispatch();
   const token = useSelector((store: AppStore) => store.auth.token);
-  const {latitude, longitude} =useSelector((store: AppStore) => store.auth.position.coords)
+  const { latitude, longitude } = useSelector(
+    (store: AppStore) => store.auth.position.coords
+  );
 
   const [error, setError] = useState<string | null>(null);
-
 
   const onSuccess = (data: ExperiencesModel) => {
     setExperiences(data);
@@ -92,15 +93,26 @@ const Home = () => {
     setExperiences(data);
   };
 
-  const { refetch: refetchLocation, isFetching: isFetchingLocation, isLoading: isLoadingLocation } = useGetExperiencesByLocation(latitude, longitude, onSuccessLocation, onErrorLocation);
-  const { refetch: refetchSearch } = useGetExperiencesByTitle(title, onSuccessSearch, onErrorSearch);
-  const categoryData = useGetExperienceCategoryData('experiencesByCategory')
-  
-  const onClickCategory = () => {
-    setExperiences(categoryData)
-    console.log(experiences)
-  }
+  const {
+    refetch: refetchLocation,
+    isFetching: isFetchingLocation,
+    isLoading: isLoadingLocation,
+  } = useGetExperiencesByLocation(
+    latitude,
+    longitude,
+    onSuccessLocation,
+    onErrorLocation
+  );
+  const { refetch: refetchSearch } = useGetExperiencesByTitle(
+    title,
+    onSuccessSearch,
+    onErrorSearch
+  );
+  const categoryData = useGetExperienceCategoryData("experiencesByCategory");
 
+  const onClickCategory = () => {
+    setExperiences(categoryData);
+  };
 
   const onSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -134,8 +146,8 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (token && latitude !== 0) refetchLocation()
-    if (!token) refetch()
+    if (token && latitude !== 0) refetchLocation();
+    if (!token) refetch();
   }, [token]);
 
   return (
@@ -176,17 +188,22 @@ const Home = () => {
           <div className="flex w-full gap-x-3 lg:gap-x-6 items-center lg:justify-center md:mx-auto pl-6 md:px-3 xl:px-0 pb-3 overflow-x-scroll md:overflow-x-hidden font-medium">
             {categories
               ? categories.map((category) => (
-                <div key={category.name} onClick={onClickCategory}>
-                  <LinkCard
-                    name={category.name}
-                    categoryId={category.id}
-                    icon={category.icon}
+                  <div key={category.name} onClick={onClickCategory}>
+                    <LinkCard
+                      name={category.name}
+                      categoryId={category.id}
+                      icon={category.icon}
+                      experiences={experiences}
+                      setExperience={setExperiences}
                     />
                   </div>
                 ))
               : null}
           </div>
-          {isLoading || isFetching || isFetchingLocation || isLoadingLocation ? (
+          {isLoading ||
+          isFetching ||
+          isFetchingLocation ||
+          isLoadingLocation ? (
             <Spinner />
           ) : (
             <Experiences
