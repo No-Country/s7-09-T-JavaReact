@@ -25,6 +25,7 @@ public class DataLoader implements ApplicationRunner {
     private final ExperienceRepository experienceRepository;
     private final ImageRepository imageRepository;
     private final CityRepository cityRepository;
+    private final ContactRepository contactRepository;
     @Value("${dataloader:false}")
     private boolean isDataAutoLoaded;
 
@@ -33,13 +34,14 @@ public class DataLoader implements ApplicationRunner {
     private List<Experience> experiences;
 
     @Autowired
-    public DataLoader(CategoryRepository categoryRepository, TagRepository tagRepository, UserService userService, ExperienceRepository experienceRepository, ImageRepository imageRepository, CityRepository cityRepository) {
+    public DataLoader(CategoryRepository categoryRepository, TagRepository tagRepository, UserService userService, ExperienceRepository experienceRepository, ImageRepository imageRepository, CityRepository cityRepository, ContactRepository contactRepository) {
         this.categoryRepository = categoryRepository;
         this.tagRepository = tagRepository;
         this.userService = userService;
         this.experienceRepository = experienceRepository;
         this.imageRepository = imageRepository;
         this.cityRepository = cityRepository;
+        this.contactRepository = contactRepository;
     }
 
     @Override
@@ -140,11 +142,15 @@ public class DataLoader implements ApplicationRunner {
     private void experienceLoading() {
         experiences = new ArrayList<>();
         Set<Image> images1 = new HashSet<>();
+        Contact contact = new Contact(1, "email", "12345", "ig", "123", "contact.com");
+        contactRepository.save(contact);
+
         Experience experience1 = Experience.builder()
                 .category(categories.get(0))
                 .longitude(40L)
                 .latitude(2L)
                 .city(cities.get(0))
+                .contact(contact)
                 .title("Breakfast in London")
                 .subtitle("Breakfast in London")
                 .description("Breakfast in London")
@@ -170,6 +176,7 @@ public class DataLoader implements ApplicationRunner {
                 .title("Bus in London")
                 .subtitle("Bus in London")
                 .description("Bus in London")
+                .contact(contact)
                 .build();
         images2.add(
                 Image.builder().id(4).url("https://upload.wikimedia.org/wikipedia/commons/f/f4/LTZ1683_159_1.jpg").alt("Bus in London").experience(experience2).build());
@@ -191,6 +198,7 @@ public class DataLoader implements ApplicationRunner {
                 .title("Hotel in London")
                 .subtitle("Hotel in London")
                 .description("Hotel in London")
+                .contact(contact)
                 .build();
 
         images3.add(

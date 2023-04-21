@@ -137,6 +137,7 @@ public class ExperienceMapperTest {
                 .latitude(50L)
                 .city(cityDTO)
                 .category(categoryDTO)
+                .contact(new ContactDTO(1, "email", "phone", "website", "facebook", "instagram"))
                 .longitude(40L)
                 .averageScore(2L)
                 .images(images).build();

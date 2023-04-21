@@ -61,8 +61,19 @@ class ReviewServiceImplTest {
         userList.add(new User(3, "Maria", "Gomez", "maria@email.com", "123456", RoleEnum.USER));
 
         Category category = new Category(1, "Cultural", "icon-cultural", new HashSet<>());
-        Experience experience1 = new Experience(
-                1, "Museo de Arte", "Museo de arte de la ciudad", "",null, category, new City(1, "", "", ""), reviewList,"", 4, 1, 4f, 4f);
+        Experience experience1 = Experience.builder().
+                id(1).
+                title("Tour por el centro").
+                description("Tour por el centro de la ciudad").
+                subtitle("Tour por el centro de la ciudad").
+                address("Calle 1").
+                category(category).
+                contact(new Contact()).
+                city(new City(1, "Bogota", "Bogota", "Colombia")).
+                images(new HashSet<>()).
+                totalReviews(0).
+                totalScore(0).
+                build();
         experienceList.add(experience1);
 
         reviewList.add(new Review(1, 4, "Muy bueno", LocalDate.of(2000, 6, 9), userList.get(0), experience1));

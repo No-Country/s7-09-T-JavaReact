@@ -15,6 +15,9 @@ public interface ReviewMapper {
 
     @Mapping(target = "profile", source = "user")
     @Mapping(target = "experienceId", source = "experience.id")
+    @Mapping(target = "experienceAverageScore", expression = "java(" +
+            "review.getExperience().getTotalReviews() > 0 ?" +
+            " review.getExperience().getTotalScore()/review.getExperience().getTotalReviews(): 0)")
     ReviewDTO toReviewDto (Review review);
 
     @InheritInverseConfiguration
